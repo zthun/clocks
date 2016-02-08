@@ -20,6 +20,7 @@ module.exports = function (config) {
             'node_modules/angular/angular.js',
             'node_modules/angular-ui-router/release/angular-ui-router.js',
             'node_modules/angular-mocks/angular-mocks.js',
+            'node_modules/zpubsub/bin/zpubsub.js',
             'app/ztimer.js',
             'app/**/*.js'
         ],

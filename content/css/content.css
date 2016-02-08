@@ -1,0 +1,22 @@
+body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 60%;
+    margin: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    overflow: auto;
+}
+header, article {
+    text-align: center;
+    margin: auto;
+}
+.op-toolbar .btn {
+    font-size: 1.5em;
+}
+.op-toolbar .btn-group {
+    float: none !important;
+}

@@ -60,14 +60,6 @@ module.exports = function (grunt) {
             }
         },
         // Debug Portion
-        'sprite': {
-            debug: {
-                src: ['content/images/icon-site/*.png', 'content/images/icon-games/*.png'],
-                dest: '<%=paths.debug%>/content/ztimer.sprites.png',
-                destCss: '<%=paths.debug%>/styles/ztimer.sprites.css',
-                padding: 0,
-            },
-        },
         'concat': {
             jsScripts: {
                 src: [
@@ -80,7 +72,8 @@ module.exports = function (grunt) {
             jsVendor: {
                 src: [
                     'node_modules/angular/angular.js',
-                    'node_modules/angular-ui-router/release/angular-ui-router.js'
+                    'node_modules/angular-ui-router/release/angular-ui-router.js',
+                    'node_modules/zpubsub/bin/zpubsub.js'
                 ],
                 dest: '<%=paths.debug%>/scripts/ztimer.vendor.js'
             },
@@ -88,14 +81,14 @@ module.exports = function (grunt) {
                 src: [
                     'content/**/*.css'
                 ],
-                dest: '<%=paths.debug%>/styles/ztimer.content.css'
+                dest: '<%=paths.debug%>/content/css/ztimer.content.css'
             },
             cssVendor: {
                 src: [
                     'node_modules/bootstrap/dist/css/bootstrap.css',
                     'node_modules/animate.css/animate.css'
                 ],
-                dest: '<%=paths.debug%>/styles/ztimer.vendor.css'
+                dest: '<%=paths.debug%>/content/css/ztimer.vendor.css'
             }
         },
         // Release Portion
@@ -118,21 +111,15 @@ module.exports = function (grunt) {
         'cssmin': {
             content: {
                 files: {
-                    '<%=paths.release%>/styles/ztimer.content.min.css' : [
-                        '<%=paths.debug%>/styles/ztimer.content.css'
+                    '<%=paths.release%>/content/css/ztimer.content.min.css' : [
+                        '<%=paths.debug%>/content/css/ztimer.content.css'
                     ]
-                }
-            },
-            sprites: {
-                files: {
-                    '<%=paths.release%>/styles/ztimer.sprites.min.css' : [
-                        '<%=paths.debug%>/styles/ztimer.sprites.css']
                 }
             },
             vendor: {
                 files: {
-                    '<%=paths.release%>/styles/ztimer.vendor.min.css' : [
-                        '<%=paths.debug%>/styles/ztimer.vendor.css'
+                    '<%=paths.release%>/content/css/ztimer.vendor.min.css' : [
+                        '<%=paths.debug%>/content/css/ztimer.vendor.css'
                     ]
                 }
             }
@@ -142,7 +129,8 @@ module.exports = function (grunt) {
             debug: {
                 expand: true,
                 src: [
-                    'app/**/*.html'
+                    'app/**/*.html',
+                    'content/fonts/*.*'
                 ],
                 filter: 'isFile',
                 dest: '<%=paths.debug%>/'
@@ -156,7 +144,7 @@ module.exports = function (grunt) {
                 cwd: '<%=paths.debug%>',
                 src: [
                     'app/**/*.html',
-                    'content/*.png'
+                    'content/fonts/*.*'
                 ],
                 filter: 'isFile',
                 dest: '<%=paths.release%>/'
@@ -234,7 +222,6 @@ module.exports = function (grunt) {
     ]);
     
     grunt.registerTask('rebuild', [
-        'sprite',
         'concat',
         'uglify',
         'cssmin',
