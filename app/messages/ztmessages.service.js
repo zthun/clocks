@@ -7,6 +7,7 @@
         
         // Commands
         zPubSub.register('OpNewTimer');
+        zPubSub.register('OpNewStopwatch');
         zPubSub.register('OpDeleteAllTimers');
         zPubSub.register('OpResetAllTimers');
         zPubSub.register('OpStartAllTimers');

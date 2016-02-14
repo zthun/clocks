@@ -13,6 +13,7 @@
         
         function activate() {
             vm.addNewTimer = addNewTimer;
+            vm.addNewStopwatch = addNewStopwatch;
             vm.deleteAllTimers = deleteAllTimers;
             vm.resetAllTimers = resetAllTimers;
             vm.startAllTimers = startAllTimers;
@@ -21,6 +22,10 @@
         
         function addNewTimer() {
             ztOperationsService.publishAddNewTimer();
+        }
+        
+        function addNewStopwatch() {
+            ztOperationsService.publishAddNewStopwatch();
         }
         
         function deleteAllTimers() {

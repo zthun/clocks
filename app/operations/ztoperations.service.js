@@ -9,11 +9,18 @@
     function ZtOperationsService($q, zPubSub) {
         return {
             publishAddNewTimer: publishAddNewTimer,
+            publishAddNewStopwatch: publishAddNewStopwatch,
             publishDeleteAllTimers: publishDeleteAllTimers,
             publishStartAllTimers: publishStartAllTimers,
             publishStopAllTimers: publishStopAllTimers,
             publishResetAllTimers: publishResetAllTimers
         };
+        
+        function publishAddNewStopwatch() {
+            return $q.when(true).then(function () {
+                return zPubSub.publishOpNewStopwatch().firstDefined();
+            });
+        }
         
         function publishAddNewTimer() {
             return $q.when(true).then(function () {

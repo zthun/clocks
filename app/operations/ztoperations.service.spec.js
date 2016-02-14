@@ -15,6 +15,7 @@
             zPubSub = ZtMessagesService;
             
             spyOn(zPubSub, 'publishOpNewTimer').and.callThrough();
+            spyOn(zPubSub, 'publishOpNewStopwatch').and.callThrough();
             spyOn(zPubSub, 'publishOpDeleteAllTimers').and.callThrough();
             spyOn(zPubSub, 'publishOpResetAllTimers').and.callThrough();
             spyOn(zPubSub, 'publishOpStartAllTimers').and.callThrough();
@@ -28,6 +29,16 @@
                 scope.$apply();
                 // Assert
                 expect(zPubSub.publishOpNewTimer).toHaveBeenCalled();
+            });
+        });
+        
+        describe('New Stopwatches', function () {
+            it('publishes the OpNewStopwatch command.', function () {
+                // Arrange & Act 
+                target.publishAddNewStopwatch();
+                scope.$apply();
+                // Assert 
+                expect(zPubSub.publishOpNewStopwatch).toHaveBeenCalled();
             });
         });
         

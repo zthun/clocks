@@ -17,6 +17,7 @@
             q = $q;
             
             spyOn(ztOperationsSvc, 'publishAddNewTimer').and.returnValue($q.when(true));
+            spyOn(ztOperationsSvc, 'publishAddNewStopwatch').and.returnValue($q.when(true));
             spyOn(ztOperationsSvc, 'publishResetAllTimers').and.returnValue($q.when(true));
             spyOn(ztOperationsSvc, 'publishStartAllTimers').and.returnValue($q.when(true));
             spyOn(ztOperationsSvc, 'publishStopAllTimers').and.returnValue($q.when(true));
@@ -34,6 +35,15 @@
             target.addNewTimer();
             // Assert 
             expect(ztOperationsSvc.publishAddNewTimer).toHaveBeenCalled();
+        });
+        
+        it('Adds a new stopwatch.', function () {
+            // Arrange
+            var target = createTarget();
+            // Act 
+            target.addNewStopwatch();
+            // Assert 
+            expect(ztOperationsSvc.publishAddNewStopwatch).toHaveBeenCalled();
         });
         
         it('Resets all timers.', function () {
