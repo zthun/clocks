@@ -20,3 +20,23 @@ header, article {
 .op-toolbar .btn-group {
     float: none !important;
 }
+
+.runner-container {
+    margin-top: 1em;
+}
+    .runner-container>div {
+        max-width: 25em;
+        text-align: center;
+        margin: auto;
+        border: 1em solid silver;
+        border-radius: 1em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        padding: 1em;
+    }
+        .runner-container>div>span {
+            font-size: 3em;
+        }
+        .runner-container>div>div>button {
+            margin-top: 1em;
+        }

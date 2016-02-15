@@ -1,3 +1,17 @@
-<div>
-    Runner
+<div class="row">
+    <div class="col-xs-12">
+        <div class="runner-container">
+            <div data-ng-repeat="timer in runner.timers">
+                <span data-ng-if="timer.type === 'Timer'" class="glyphicon glyphicon-hourglass"></span>
+                <span data-ng-if="timer.type === 'Stopwatch'" class="glyphicon glyphicon-time"></span>
+                <span>{{timer.valueText}}</span>
+                <div>
+                    <button type="button" class="btn btn-success" data-ng-if="!timer.isRunning" data-ng-click="runner.startTimer(timer)"><span class="glyphicon glyphicon-play"></span></button>
+                    <button type="button" class="btn btn-danger" data-ng-if="timer.isRunning" data-ng-click="runner.stopTimer(timer)"><span class="glyphicon glyphicon-stop"></span></button>
+                    <button type="button" class="btn btn-warning" data-ng-click="runner.resetTimer(timer)"><span class="glyphicon glyphicon-refresh"></span></button>
+                    <button type="button" class="btn btn-default" data-ng-click="runner.deleteTimer(timer)"><span class="glyphicon glyphicon-remove-circle"></span>Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

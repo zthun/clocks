@@ -1,10 +1,14 @@
-<div class="btn-toolbar op-toolbar">
-    <div class="btn-group">
-        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus"></span>New Timer</button>
-        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-time"></span>New Stopwatch</button>
-        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span>Delete All</button>
-        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-repeat"></span>Reset All</button>
-        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-play"></span>Start All</button>
-        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-stop"></span>Stop All</button>
+<div class="row">
+   <div class="col-xs-12">
+        <div class="btn-toolbar op-toolbar">
+            <div class="btn-group">
+                <button class="btn btn-default" type="button" data-ng-click="operations.addNewTimer()"><span class="glyphicon glyphicon-hourglass"></span><span class="hidden-xs">New Timer</span></button>
+                <button class="btn btn-default" type="button" data-ng-click="operations.addNewStopwatch()"><span class="glyphicon glyphicon-time"></span><span class="hidden-xs">New Stopwatch</span></button>
+                <button class="btn btn-default" type="button" data-ng-click="operations.deleteAllTimers()"><span class="glyphicon glyphicon-minus"></span><span class="hidden-xs">Delete All</span></button>
+                <button class="btn btn-default" type="button" data-ng-click="operations.resetAllTimers()"><span class="glyphicon glyphicon-repeat"></span><span class="hidden-xs">Reset All</span></button>
+                <button class="btn btn-default" type="button" data-ng-click="operations.startAllTimers()"><span class="glyphicon glyphicon-play"></span><span class="hidden-xs">Start All</span></button>
+                <button class="btn btn-default" type="button" data-ng-click="operations.stopAllTimers()"><span class="glyphicon glyphicon-stop"></span><span class="hidden-xs">Stop All</span></button>
+            </div>
+        </div>
     </div>
 </div>
