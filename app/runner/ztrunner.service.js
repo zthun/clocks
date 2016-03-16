@@ -13,36 +13,34 @@
             tickTimer: tickTimer,
             startTimers: startTimers,
             stopTimers: stopTimers,
-            resetTimers: resetTimers
+            resetTimers: resetTimers,
+            prepareForEdit: prepareForEdit,
+            saveEdit: saveEdit,
+            finishEdit: finishEdit
         };
         
-        function createPrototype() {
-            return {
+        function _create(type, value, multiplier) {
+            var t =  {
                 isRunning: false,
+                type: type,
+                value: value,
+                startValue: value,
+                multiplier: multiplier,
+                valueText: '00:00'
             };
+            _updateText(t);
+            return t;
         }
         
         function createNewTimer() {
             return $q.when(true).then(function () {
-                var timer = Object.create(createPrototype());
-                timer.type = 'Timer';
-                timer.value = 300;
-                timer.startValue = 300;
-                timer.valueText = '05:00';
-                timer.multiplier = -1;
-                return timer;
+                return _create('Timer', 300, -1);
             });
         }
         
         function createNewStopwatch() {
             return $q.when(true).then(function () {
-                var stopwatch = Object.create(createPrototype());
-                stopwatch.type = 'Stopwatch';
-                stopwatch.value = 0;
-                stopwatch.startValue = 0;
-                stopwatch.valueText = '00:00';
-                stopwatch.multiplier = 1;
-                return stopwatch;
+                return _create('Stopwatch', 0, 1);
             });
         }
         
@@ -107,6 +105,40 @@
             return $q.when(true).then(function () {
                 timers.forEach(_resetTimer);
                 return timers;
+            });
+        }
+        
+        function _createEdit(timer) {
+            return { 
+                minutes: Math.floor(timer.value / 60),
+                seconds: Math.floor(timer.value % 60)
+            };
+        }
+        
+        function prepareForEdit(timer) {
+            return $q.when(true).then(function () {
+                timer.edit = _createEdit(timer);
+                return timer;
+            });
+        }
+        
+        function saveEdit(timer) {
+            return $q.when(true).then(function () {
+                return timer.edit ? true : $q.reject('The timer is not being edited.'); 
+            }).then(function () {
+                var value = Math.floor(timer.edit.minutes * 60) + timer.edit.seconds;
+                timer.value = value;
+                _updateText(timer);
+                return finishEdit(timer);
+            });
+        }
+        
+        function finishEdit(timer) {
+            return $q.when(true).then(function () {
+                return timer.edit ? true : $q.reject('The timer is not being edited.');
+            }).then(function () {
+                delete timer.edit;
+                return timer;
             });
         }
     }

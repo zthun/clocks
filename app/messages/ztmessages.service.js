@@ -16,6 +16,9 @@
         zPubSub.register('OpResetAllTimers');
         zPubSub.register('OpStartAllTimers');
         zPubSub.register('OpStopAllTimers');
+        zPubSub.register('OpEditTimer');
+        zPubSub.register('OpSaveEdit');
+        zPubSub.register('OpCancelEdit');
         
         return zPubSub;
     }

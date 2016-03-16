@@ -190,5 +190,130 @@
                 expect(value).toBe('01:57');
             });
         });
+        
+        describe('Edit Timers', function () {
+            var timer;
+                
+            beforeEach(function () {
+                target.createNewTimer().then(function (t) {
+                    timer = t;
+                    return timer;
+                });
+                scope.$apply();
+            });
+                
+            it('creates the edit property.', function () {
+                // Arrange 
+                timer.value = 100;
+                // Act 
+                target.prepareForEdit(timer);
+                scope.$apply();
+                // Assert
+                expect(timer.edit).toBeDefined();
+            });
+            
+            it('sets the minutes as a 60 second interval.', function () {
+                // Arrange
+                timer.value = 322;
+                var expected = 5;
+                // Act 
+                target.prepareForEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(timer.edit.minutes).toBe(expected);
+            });
+            
+            it('sets no minutes if value is less than 60.', function () {
+                // Arrange 
+                timer.value = 42;
+                var expected = 0;
+                // Act 
+                target.prepareForEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(timer.edit.minutes).toBe(expected);
+            });
+            
+            it('sets the seconds to the remaining value after dividing by 60.', function () {
+                // Arrange
+                timer.value = 359;
+                var expected = 59;
+                // Act 
+                target.prepareForEdit(timer);
+                scope.$apply();
+                // Assert
+                expect(timer.edit.seconds).toBe(expected);
+            });
+            
+            it('sets the seconds to 0 if the value is evenly divisible by 0.', function () {
+                // Arrange 
+                timer.value = 300;
+                var expected = 0;
+                // Act 
+                target.prepareForEdit(timer);
+                scope.$apply();
+                // Assert
+                expect(timer.edit.seconds).toBe(expected);
+            });
+            
+            it('saves the edit.', function () {
+                // Arrange 
+                timer.value = 300;
+                target.prepareForEdit(timer);
+                scope.$apply();
+                timer.edit.minutes = 6;
+                timer.edit.seconds = 52;
+                // Act
+                target.saveEdit(timer);
+                scope.$apply();
+                // Assert
+                expect(timer.value).toBe(412);
+            });
+            
+            it('rejects the save if the timer is not being edited.', function () {
+                // Arrange
+                var failed = false;
+                // Act
+                target.saveEdit(timer).catch(function () { failed = true; });
+                scope.$apply();
+                // Assert
+                expect(failed).toBeTruthy();
+            });
+            
+            it('deletes the edit on save.', function () {
+                // Arrange 
+                target.prepareForEdit(timer);
+                scope.$apply();
+                // Act 
+                target.saveEdit(timer);
+                scope.$apply();
+                // Assert
+                expect(timer.edit).not.toBeDefined();
+            });
+            
+            it('stops the edit without saving when finish is called.', function () {
+                // Arrange
+                timer.value = 300;
+                target.prepareForEdit(timer);
+                scope.$apply();
+                timer.edit.minutes = 6;
+                timer.edit.seconds = 52;
+                // Act 
+                target.finishEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(timer.value).toBe(300);
+            });
+            
+            it('rejects the stop if the timer is not being edited.', function () {
+                // Arrange
+                var failed = false;
+                // Act 
+                target.finishEdit(timer).catch(function () { failed = true; });
+                scope.$apply();
+                // Assert 
+                expect(failed).toBeTruthy();
+            });
+        });
     });
 })();

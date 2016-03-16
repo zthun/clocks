@@ -27,6 +27,9 @@
             vm.startAll = startAll;
             vm.resetTimer = resetTimer;
             vm.resetAll = resetAll;
+            vm.editTimer = editTimer;
+            vm.saveEdit = saveEdit;
+            vm.cancelEdit = cancelEdit;
             
             ztMessagesService.subscribeOpNewTimer(vm, addTimer);
             ztMessagesService.subscribeOpNewStopwatch(vm, addStopwatch);
@@ -38,6 +41,12 @@
             ztMessagesService.subscribeOpStartAllTimers(vm, startAll);
             ztMessagesService.subscribeOpStopAllTimers(vm, stopAll);
             ztMessagesService.subscribeOpResetAllTimers(vm, resetAll);
+            ztMessagesService.subscribeOpEditTimer(vm, editTimer);
+            ztMessagesService.subscribeOpSaveEdit(vm, saveEdit);
+            ztMessagesService.subscribeOpCancelEdit(vm, cancelEdit);
+            
+            // We will start off with 1 stopwatch
+            addStopwatch();
         }
         
         function addTimer() {
@@ -110,6 +119,24 @@
         function resetAll() {
             return $q.when(true).then(function () {
                 return ztRunnerService.resetTimers(vm.timers);
+            });
+        }
+        
+        function editTimer(timer) {
+            return $q.when(true).then(function () {
+                return ztRunnerService.prepareForEdit(timer);
+            });
+        }
+        
+        function saveEdit(timer) {
+            return $q.when(true).then(function () {
+                return ztRunnerService.saveEdit(timer); 
+            });
+        }
+        
+        function cancelEdit(timer) {
+            return $q.when(true).then(function () {
+                return ztRunnerService.finishEdit(timer); 
             });
         }
     }

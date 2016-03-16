@@ -33,10 +33,17 @@
             spyOn(ztRunnerSvc, 'stopTimers').and.callFake(function(timers) { return q.when(timers.length); });
             spyOn(ztRunnerSvc, 'startTimers').and.callFake(function (timers){ return q.when(timers.length); });
             spyOn(ztRunnerSvc, 'resetTimers').and.callFake(function (timers){ return q.when(timers.length); });
+            spyOn(ztRunnerSvc, 'prepareForEdit').and.returnValue(q.when(true));
+            spyOn(ztRunnerSvc, 'saveEdit').and.returnValue(q.when(true));
+            spyOn(ztRunnerSvc, 'finishEdit').and.returnValue(q.when(true));
         }));
         
         function createTarget() {
-            return controller('ZtRunnerController', controllerArgs);
+            var target = controller('ZtRunnerController', controllerArgs);
+            // Make sure the target timer list is empty. 
+            ztMessagesSvc.publishOpDeleteAllTimers();
+            scope.$apply();
+            return target;
         }
         
         describe('Add', function () {
@@ -116,84 +123,132 @@
         
         });
         
-        it('Starts an individual timer.', function () {
-            // Arrange 
-            var target = createTarget();
-            ztMessagesSvc.publishOpNewTimer();
-            scope.$apply();
-            var timer = target.timers[0];
-            // Act 
-            ztMessagesSvc.publishOpStartTimer(timer);
-            scope.$apply();
-            // Assert 
-            expect(ztRunnerSvc.startTimers).toHaveBeenCalledWith([timer]);
+        describe('Start', function () {
+            it('Starts an individual timer.', function () {
+                // Arrange 
+                var target = createTarget();
+                ztMessagesSvc.publishOpNewTimer();
+                scope.$apply();
+                var timer = target.timers[0];
+                // Act 
+                ztMessagesSvc.publishOpStartTimer(timer);
+                scope.$apply();
+                // Assert 
+                expect(ztRunnerSvc.startTimers).toHaveBeenCalledWith([timer]);
+            });  
+            it('Starts all timers', function () {
+                // Arrange
+                var target = createTarget();
+                ztMessagesSvc.publishOpNewTimer();
+                ztMessagesSvc.publishOpNewStopwatch();
+                scope.$apply();
+                // Act 
+                ztMessagesSvc.publishOpStartAllTimers();
+                scope.$apply();
+                // Assert
+                expect(ztRunnerSvc.startTimers).toHaveBeenCalledWith(target.timers);
+            });
         });
         
-        it('Stops an individual timer.', function () {
-            // Arrange 
-            var target = createTarget();
-            ztMessagesSvc.publishOpNewStopwatch();
-            scope.$apply();
-            var timer = target.timers[0];
-            // Act 
-            ztMessagesSvc.publishOpStopTimer(timer);
-            scope.$apply();
-            // Assert 
-            expect(ztRunnerSvc.stopTimers).toHaveBeenCalledWith([timer]);
+        describe('Stop', function () {
+            it('Stops an individual timer.', function () {
+                // Arrange 
+                var target = createTarget();
+                ztMessagesSvc.publishOpNewStopwatch();
+                scope.$apply();
+                var timer = target.timers[0];
+                // Act 
+                ztMessagesSvc.publishOpStopTimer(timer);
+                scope.$apply();
+                // Assert 
+                expect(ztRunnerSvc.stopTimers).toHaveBeenCalledWith([timer]);
+            });
+            
+            it('Stops all timers.', function () {
+                // Arrange
+                var target = createTarget();
+                ztMessagesSvc.publishOpNewTimer();
+                ztMessagesSvc.publishOpNewStopwatch();
+                scope.$apply();
+                // Act 
+                ztMessagesSvc.publishOpStopAllTimers();
+                scope.$apply();
+                // Assert
+                expect(ztRunnerSvc.stopTimers).toHaveBeenCalledWith(target.timers);
+            });
         });
         
-        it('Resets an individual timer.', function () {
-            // Arrange 
-            var target = createTarget();
-            ztMessagesSvc.publishOpNewTimer();
-            scope.$apply();
-            var timer = target.timers[0];
-            // Act 
-            ztMessagesSvc.publishOpResetTimer(timer);
-            scope.$apply();
-            // Assert 
-            expect(ztRunnerSvc.resetTimers).toHaveBeenCalledWith([timer]);
+        describe('Reset', function () {
+            it('Resets an individual timer.', function () {
+                // Arrange 
+                var target = createTarget();
+                ztMessagesSvc.publishOpNewTimer();
+                scope.$apply();
+                var timer = target.timers[0];
+                // Act 
+                ztMessagesSvc.publishOpResetTimer(timer);
+                scope.$apply();
+                // Assert 
+                expect(ztRunnerSvc.resetTimers).toHaveBeenCalledWith([timer]);
+            });
+        
+            it('Resets all timers', function () {
+                // Arrange
+                var target = createTarget();
+                ztMessagesSvc.publishOpNewTimer();
+                ztMessagesSvc.publishOpNewStopwatch();
+                scope.$apply();
+                // Act 
+                ztMessagesSvc.publishOpResetAllTimers();
+                scope.$apply();
+                // Assert
+                expect(ztRunnerSvc.resetTimers).toHaveBeenCalledWith(target.timers);
+            }); 
         });
         
-        
-        it('Starts all timers', function () {
-            // Arrange
-            var target = createTarget();
-            ztMessagesSvc.publishOpNewTimer();
-            ztMessagesSvc.publishOpNewStopwatch();
-            scope.$apply();
-            // Act 
-            ztMessagesSvc.publishOpStartAllTimers();
-            scope.$apply();
-            // Assert
-            expect(ztRunnerSvc.startTimers).toHaveBeenCalledWith(target.timers);
+        describe('Edit', function () {
+            it('Begins an edit.', function () {
+                // Arrange
+                var target = createTarget();
+                ztMessagesSvc.publishOpNewTimer();
+                scope.$apply();
+                var timer = target.timers[0];
+                // Act 
+                ztMessagesSvc.publishOpEditTimer(timer);
+                scope.$apply();
+                // Assert 
+                expect(ztRunnerSvc.prepareForEdit).toHaveBeenCalledWith(timer);
+            });
+            
+            it('Saves an edit.', function () {
+                // Arrange
+                var target = createTarget();
+                ztMessagesSvc.publishOpNewTimer();
+                scope.$apply();
+                var timer = target.timers[0];
+                ztMessagesSvc.publishOpEditTimer(timer);
+                scope.$apply();
+                // Act 
+                ztMessagesSvc.publishOpSaveEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(ztRunnerSvc.saveEdit).toHaveBeenCalledWith(timer);
+            });
+            
+            it('Cancels an edit.', function () {
+                // Arrange
+                var target = createTarget();
+                ztMessagesSvc.publishOpNewTimer();
+                scope.$apply();
+                var timer = target.timers[0];
+                ztMessagesSvc.publishOpEditTimer(timer);
+                scope.$apply();
+                // Act 
+                ztMessagesSvc.publishOpCancelEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(ztRunnerSvc.finishEdit).toHaveBeenCalledWith(timer);
+            });
         });
-        
-        it('Stops all timers.', function () {
-            // Arrange
-            var target = createTarget();
-            ztMessagesSvc.publishOpNewTimer();
-            ztMessagesSvc.publishOpNewStopwatch();
-            scope.$apply();
-            // Act 
-            ztMessagesSvc.publishOpStopAllTimers();
-            scope.$apply();
-            // Assert
-            expect(ztRunnerSvc.stopTimers).toHaveBeenCalledWith(target.timers);
-        });
-        
-        it('Resets all timers', function () {
-            // Arrange
-            var target = createTarget();
-            ztMessagesSvc.publishOpNewTimer();
-            ztMessagesSvc.publishOpNewStopwatch();
-            scope.$apply();
-            // Act 
-            ztMessagesSvc.publishOpResetAllTimers();
-            scope.$apply();
-            // Assert
-            expect(ztRunnerSvc.resetTimers).toHaveBeenCalledWith(target.timers);
-        });
-        
     });
 })();
