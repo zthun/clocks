@@ -201,6 +201,17 @@
                 });
                 scope.$apply();
             });
+            
+            it('stops the timer if it is running.', function () {
+                // Arrange 
+                target.startTimers([timer]);
+                scope.$apply();
+                // Act
+                target.prepareForEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(timer.isRunning).toBeFalsy();
+            });
                 
             it('creates the edit property.', function () {
                 // Arrange 
@@ -268,6 +279,21 @@
                 scope.$apply();
                 // Assert
                 expect(timer.value).toBe(412);
+            });
+            
+            it('sets the start value.', function () {
+                // Arrange 
+                timer.value = 300;
+                timer.startValue = 100;
+                target.prepareForEdit(timer);
+                scope.$apply();
+                timer.edit.minutes = 6;
+                timer.edit.seconds = 52;
+                // Act 
+                target.saveEdit(timer);
+                scope.$apply();
+                // Assert
+                expect(timer.startValue).toBe(412);
             });
             
             it('rejects the save if the timer is not being edited.', function () {

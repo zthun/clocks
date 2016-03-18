@@ -117,6 +117,8 @@
         
         function prepareForEdit(timer) {
             return $q.when(true).then(function () {
+                return stopTimers([timer]);
+            }).then(function () {
                 timer.edit = _createEdit(timer);
                 return timer;
             });
@@ -128,6 +130,7 @@
             }).then(function () {
                 var value = Math.floor(timer.edit.minutes * 60) + timer.edit.seconds;
                 timer.value = value;
+                timer.startValue = value;
                 _updateText(timer);
                 return finishEdit(timer);
             });
