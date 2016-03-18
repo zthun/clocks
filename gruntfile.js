@@ -54,6 +54,23 @@ module.exports = function (grunt) {
                 }
             }
         },
+        'bootlint': {
+            options: {
+                showallerrors: true,
+                relaxerror: {
+                    'E001': ['app/**/*.html'],
+                    'W001': ['app/**/*.html'],
+                    'W002': ['app/**/*.html'],
+                    'W003': ['app/**/*.html'],
+                    'W004': ['app/**/*.html'],
+                    'W005': ['app/**/*.html', 'index.html']
+                }
+            },
+            files: [
+                'app/**/*.html',
+                'index.html'
+            ]
+        },
         'karma': {
             phantomjs: {
                 configFile: 'karma.conf.js'
@@ -71,9 +88,11 @@ module.exports = function (grunt) {
             },
             jsVendor: {
                 src: [
+                    'node_modules/jquery/dist/jquery.js',
                     'node_modules/angular/angular.js',
                     'node_modules/angular-ui-router/release/angular-ui-router.js',
-                    'node_modules/zpubsub/bin/zpubsub.js'
+                    'node_modules/zpubsub/bin/zpubsub.js',
+                    'node_modules/bootstrap/dist/js/bootstrap.js'
                 ],
                 dest: '<%=paths.debug%>/scripts/ztimer.vendor.js'
             },
@@ -207,6 +226,7 @@ module.exports = function (grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-bootlint');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-spritesmith');
@@ -218,6 +238,7 @@ module.exports = function (grunt) {
     
     grunt.registerTask('check', [
         'jshint',
+        'bootlint',
         'karma'
     ]);
     
