@@ -1,18 +1,64 @@
-/*global module, inject*/
+/*global module*/
 
 module.exports = function (grunt) {
     'use strict';
+
+    var filePaths = {
+        coverage: 'coverage',
+        build: 'bin',
+        debug: 'bin/debug',
+        release: 'bin/release',
+        full: 'bin/full'
+    };
+    
+    var fileLists = {
+        vendorScripts: [
+            'node_modules/jquery/dist/jquery.js',
+            'node_modules/angular/angular.js',
+            'node_modules/angular-ui-router/release/angular-ui-router.js',
+            'node_modules/zpubsub/bin/zpubsub.js',
+            'node_modules/bootstrap/dist/js/bootstrap.js'
+        ],
+        vendorCss: [
+            'node_modules/bootstrap/dist/css/bootstrap.css',
+            'node_modules/animate.css/animate.css'
+        ],
+        appScripts: [
+            'app/ztimer.js',
+            'app/**/*.js',
+            '!app/**/*.spec.js'
+        ],
+        appCss: [
+            'content/**/*.css'
+        ],
+        appHtml: [
+            'app/**/*.html'
+        ],
+        fonts: [
+            'node_modules/bootstrap/dist/fonts/*.*'
+        ]
+    };
+    
+    function pathMap(location, relativePath) {
+        var isNot = relativePath.length > 0 && relativePath[0] === '!';
+        var path = isNot ? relativePath.slice(1) : relativePath;
+        var first = isNot ? '!' : '';
+        
+        return '{0}{1}/{2}'
+            .replace('{0}', first)
+            .replace('{1}', location)
+            .replace('{2}', path);
+    }
+    
+    function fullPathMap(relativePath) {
+        return pathMap(filePaths.full, relativePath);
+    }
     
     grunt.file.readJSON('package.json');
 
     grunt.initConfig({
         // Configuration
-        'paths': {
-            coverage: 'coverage',
-            build: 'bin',
-            debug: 'bin/debug',
-            release: 'bin/release'        
-        },
+        'paths': filePaths,
         // Pre Processing 
         'clean': [
             '<%=paths.build %>',
@@ -38,7 +84,8 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                         'app/**/*.js',
-                        '!app/**/*.spec.js'
+                        '!app/**/*.spec.js',
+                        'gruntfile.js'
                     ]
                 }
             },
@@ -79,34 +126,19 @@ module.exports = function (grunt) {
         // Debug Portion
         'concat': {
             jsScripts: {
-                src: [
-                    'app/ztimer.js',
-                    'app/**/*.js',
-                    '!app/**/*.spec.js'
-                ],
+                src: fileLists.appScripts,
                 dest: '<%=paths.debug%>/scripts/ztimer.scripts.js'
             },
             jsVendor: {
-                src: [
-                    'node_modules/jquery/dist/jquery.js',
-                    'node_modules/angular/angular.js',
-                    'node_modules/angular-ui-router/release/angular-ui-router.js',
-                    'node_modules/zpubsub/bin/zpubsub.js',
-                    'node_modules/bootstrap/dist/js/bootstrap.js'
-                ],
+                src: fileLists.vendorScripts,
                 dest: '<%=paths.debug%>/scripts/ztimer.vendor.js'
             },
             cssContent: {
-                src: [
-                    'content/**/*.css'
-                ],
+                src: fileLists.appCss,
                 dest: '<%=paths.debug%>/content/css/ztimer.content.css'
             },
             cssVendor: {
-                src: [
-                    'node_modules/bootstrap/dist/css/bootstrap.css',
-                    'node_modules/animate.css/animate.css'
-                ],
+                src: fileLists.vendorCss,
                 dest: '<%=paths.debug%>/content/css/ztimer.vendor.css'
             }
         },
@@ -145,32 +177,80 @@ module.exports = function (grunt) {
         },
         // Post Processing
         'copy': {
-            debug: {
+            // Debug Files
+            debugTemplates: {
                 expand: true,
-                src: [
-                    'app/**/*.html',
-                    'content/fonts/*.*'
-                ],
+                src: fileLists.appHtml,
                 filter: 'isFile',
                 dest: '<%=paths.debug%>/'
+            },
+            debugFonts: {
+                expand: true,
+                flatten: true,
+                src: fileLists.fonts,
+                filter: 'isFile',
+                dest: '<%=paths.debug%>/content/fonts/'
             },
             debugIndex: {
                 src: 'index.html',
                 dest: '<%=paths.debug%>/index.html'
             },
-            release: {
+            // Release Files
+            releaseTemplates: {
                 expand: true,
                 cwd: '<%=paths.debug%>',
-                src: [
-                    'app/**/*.html',
-                    'content/fonts/*.*'
-                ],
+                src: fileLists.appHtml,
                 filter: 'isFile',
                 dest: '<%=paths.release%>/'
+            },
+            releaseFonts: {
+                expand: true,
+                flatten: true,
+                src: fileLists.fonts,
+                filter: 'isFile',
+                dest: '<%=paths.release%>/content/fonts/'
             },
             releaseIndex: {
                 src: 'index.html',
                 dest: '<%=paths.release%>/index.html'
+            },
+            // Full Files
+            fullScripts:  {
+                expand: true,
+                src: fileLists.appScripts,
+                filter: 'isFile',
+                dest: '<%=paths.full%>/'
+            },
+            fullCss: {
+                expand: true, 
+                src: fileLists.appCss, 
+                filter: 'isFile',
+                dest: '<%=paths.full%>/'
+            },
+            fullTemplates: {
+                expand: true,
+                src: fileLists.appHtml,
+                filter: 'isFile',
+                dest: '<%=paths.full%>/'
+            },
+            fullVendor: {
+                expand: true, 
+                src: fileLists.vendorScripts,
+                dest: '<%=paths.full%>/'
+            },
+            fullVendorCss: {
+                expand: true, 
+                src: fileLists.vendorCss,
+                dest: '<%=paths.full%>/'
+            },
+            fullFonts: {
+                expand: true,
+                src: fileLists.fonts, 
+                dest: '<%=paths.full%>/'
+            },
+            fullIndex: {
+                src: 'index.full.html',
+                dest: '<%=paths.full%>/index.html'
             }
         },
         'string-replace' : {
@@ -222,6 +302,45 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+        'tags' : {
+            options: {
+                scriptTemplate: '<script src="{{ path }}"></script>',
+                linkTemplate: '<link rel="stylesheet" href="{{ path }}" />',
+            },
+            fullvendorcss: {
+                options: {
+                    openTag: '<!--start vendor css-->',
+                    closeTag: '<!--end vendor css-->'
+                },
+                src: fileLists.vendorCss.map(fullPathMap),
+                dest: '<%=paths.full%>/index.html'
+            },
+            fullcss: {
+                options: {
+                    openTag: '<!--start app css-->',
+                    closeTag: '<!--end app css-->'
+                },
+                src: fileLists.appCss.map(fullPathMap),
+                dest: '<%=paths.full%>/index.html'
+            },
+            fullVendorScripts: {
+                options: {
+                    openTag: '<!--start vendor scripts-->',
+                    closeTag: '<!--end vendor scripts-->',
+                },
+                src: fileLists.vendorScripts.map(fullPathMap),
+                dest: '<%=paths.full%>/index.html'
+            },
+            
+            fullScripts: {
+                options: {
+                    openTag: '<!--start app scripts-->',
+                    closeTag: '<!--end app scripts-->',
+                },
+                src: fileLists.appScripts.map(fullPathMap),
+                dest: '<%=paths.full%>/index.html',
+            }
         }
     });
 
@@ -235,6 +354,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-string-replace');
+    grunt.loadNpmTasks('grunt-script-link-tags');
     
     grunt.registerTask('check', [
         'jshint',
@@ -247,7 +367,8 @@ module.exports = function (grunt) {
         'uglify',
         'cssmin',
         'copy',
-        'string-replace'
+        'string-replace',
+        'tags'
     ]);
     
     grunt.registerTask('default', [
