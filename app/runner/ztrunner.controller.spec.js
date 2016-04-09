@@ -36,6 +36,7 @@
             spyOn(ztRunnerSvc, 'prepareForEdit').and.returnValue(q.when(true));
             spyOn(ztRunnerSvc, 'saveEdit').and.returnValue(q.when(true));
             spyOn(ztRunnerSvc, 'finishEdit').and.returnValue(q.when(true));
+            spyOn(ztRunnerSvc, 'checkEdit').and.returnValue(q.when(true));
         }));
         
         function createTarget() {
@@ -248,6 +249,19 @@
                 scope.$apply();
                 // Assert 
                 expect(ztRunnerSvc.finishEdit).toHaveBeenCalledWith(timer);
+            });
+            
+            it('Updates the edit error state.', function () {
+                // Arrange 
+                var target = createTarget();
+                ztMessagesSvc.publishOpNewTimer();
+                scope.$apply();
+                var timer = target.timers[0];
+                // Act 
+                ztMessagesSvc.publishOpUpdateEdit(timer);
+                scope.$apply();
+                // Assert
+                expect(ztRunnerSvc.checkEdit).toHaveBeenCalledWith(timer);
             });
         });
     });

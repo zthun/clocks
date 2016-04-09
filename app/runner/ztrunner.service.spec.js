@@ -340,6 +340,113 @@
                 // Assert 
                 expect(failed).toBeTruthy();
             });
+            
+            it('can save if the timers edit is valid.', function () {
+                // Arrange 
+                target.prepareForEdit(timer);
+                scope.$apply();
+                timer.edit.minutes = 1;
+                timer.edit.seconds = 0;
+                // Act 
+                target.checkEdit(timer);
+                scope.$apply();
+                // Assert
+                expect(timer.edit.isValid).toBeTruthy();
+            });
+            
+            it('cannot save if the timer is not in edit mode.', function () {
+                // Arrange
+                var result = true;
+                // Act 
+                target.checkEdit(timer).then(function (res) { result = res; });
+                scope.$apply();
+                // Assert 
+                expect(result).toBeFalsy();
+            });
+            
+            it('cannot save if the timer has null minutes.', function () {
+                // Arrange
+                target.prepareForEdit(timer);
+                scope.$apply();
+                timer.edit.minutes = null;
+                // Act 
+                target.checkEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(timer.edit.isValid).toBeFalsy();
+            });
+            
+            it('cannot save if the timer has null seconds.', function () {
+                // Arrange
+                target.prepareForEdit(timer);
+                scope.$apply();
+                timer.edit.seconds = null;
+                // Act 
+                target.checkEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(timer.edit.isValid).toBeFalsy();
+            });
+            
+            it('cannot save if the timer has non numeric minutes.', function () {
+                // Arrange
+                target.prepareForEdit(timer);
+                scope.$apply();
+                timer.edit.minutes = 'Not a number';
+                // Act 
+                target.checkEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(timer.edit.isValid).toBeFalsy();
+            });
+            
+            it('cannot save if the timer has non numeric seconds.', function () {
+                // Arrange
+                target.prepareForEdit(timer);
+                scope.$apply();
+                timer.edit.seconds = 'Not a number';
+                // Act 
+                target.checkEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(timer.edit.isValid).toBeFalsy();
+            });
+            
+            it('cannot save if the timer has minutes less than 0.', function () {
+                // Arrange
+                target.prepareForEdit(timer);
+                scope.$apply();
+                timer.edit.minutes = -50;
+                // Act 
+                target.checkEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(timer.edit.isValid).toBeFalsy();
+            });
+            
+            it('cannot save if the timer has seconds less than 0.', function () {
+                // Arrange
+                target.prepareForEdit(timer);
+                scope.$apply();
+                timer.edit.seconds = -30;
+                // Act 
+                target.checkEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(timer.edit.isValid).toBeFalsy();
+            });
+            
+            it('cannot save if the timer has null seconds greater than 59.', function () {
+                // Arrange
+                target.prepareForEdit(timer);
+                scope.$apply();
+                timer.edit.seconds = 60;
+                // Act 
+                target.checkEdit(timer);
+                scope.$apply();
+                // Assert 
+                expect(timer.edit.isValid).toBeFalsy();
+            });
         });
     });
 })();

@@ -19,6 +19,7 @@
         zPubSub.register('OpEditTimer');
         zPubSub.register('OpSaveEdit');
         zPubSub.register('OpCancelEdit');
+        zPubSub.register('OpUpdateEdit');
         
         return zPubSub;
     }

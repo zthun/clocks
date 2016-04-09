@@ -16,7 +16,8 @@
             resetTimers: resetTimers,
             prepareForEdit: prepareForEdit,
             saveEdit: saveEdit,
-            finishEdit: finishEdit
+            finishEdit: finishEdit,
+            checkEdit: checkEdit
         };
         
         function _create(type, value, multiplier) {
@@ -111,7 +112,10 @@
         function _createEdit(timer) {
             return { 
                 minutes: Math.floor(timer.value / 60),
-                seconds: Math.floor(timer.value % 60)
+                seconds: Math.floor(timer.value % 60),
+                minuteErrors: [],
+                secondErrors: [],
+                isValid: true
             };
         }
         
@@ -142,6 +146,37 @@
             }).then(function () {
                 delete timer.edit;
                 return timer;
+            });
+        }
+        
+        function _checkEdit(timer) {
+            if(!timer.edit) {
+                return false;
+            }
+            
+            timer.edit.minuteErrors = [];
+            timer.edit.secondErrors = [];
+            
+            if( timer.edit.minutes === null ||
+                isNaN(timer.edit.minutes) || 
+                timer.edit.minutes < 0) {
+                timer.edit.minuteErrors.push('Minutes must be greater than or equal to 0.');
+            }
+            
+            if( timer.edit.seconds === null ||
+                isNaN(timer.edit.seconds) ||
+                timer.edit.seconds < 0 || 
+                timer.edit.seconds > 59) {
+                timer.edit.secondErrors.push('Seconds must be between 0 and 59.');
+            }
+            
+            timer.edit.isValid = timer.edit.minuteErrors.length === 0 && timer.edit.secondErrors.length === 0;
+            return timer.edit.isValid;
+        }
+        
+        function checkEdit(timer) {
+            return $q.when(true).then(function () {
+                return _checkEdit(timer);
             });
         }
     }

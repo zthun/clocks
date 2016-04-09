@@ -30,6 +30,7 @@
             vm.editTimer = editTimer;
             vm.saveEdit = saveEdit;
             vm.cancelEdit = cancelEdit;
+            vm.updateEdit = updateEdit;
             
             ztMessagesService.subscribeOpNewTimer(vm, addTimer);
             ztMessagesService.subscribeOpNewStopwatch(vm, addStopwatch);
@@ -44,6 +45,7 @@
             ztMessagesService.subscribeOpEditTimer(vm, editTimer);
             ztMessagesService.subscribeOpSaveEdit(vm, saveEdit);
             ztMessagesService.subscribeOpCancelEdit(vm, cancelEdit);
+            ztMessagesService.subscribeOpUpdateEdit(vm, updateEdit);
             
             // We will start off with 1 stopwatch
             addStopwatch();
@@ -137,6 +139,12 @@
         function cancelEdit(timer) {
             return $q.when(true).then(function () {
                 return ztRunnerService.finishEdit(timer); 
+            });
+        }
+        
+        function updateEdit(timer) {
+            return $q.when(true).then(function () {
+                return ztRunnerService.checkEdit(timer);
             });
         }
     }
