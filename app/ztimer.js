@@ -2,5 +2,5 @@
 (function () {
     'use strict';
     
-    angular.module('ZTimer', ['ui.router']);
+    angular.module('ZTimer', ['ui.router', 'ngAnimate']);
 })();
