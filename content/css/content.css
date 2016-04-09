@@ -37,6 +37,12 @@ header, article {
         margin-bottom: 1em;
         padding: 1em;
     }
+    .runner-container>div.ng-enter {
+        animation: zoomIn 0.5s;
+    }
+    .runner-container>div.ng-leave {
+        animation: zoomOut 0.5s;
+    }
         .runner-container>div>div>span {
             font-size: 3em;
         }
