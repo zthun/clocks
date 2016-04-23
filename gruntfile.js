@@ -7,8 +7,7 @@ module.exports = function (grunt) {
         coverage: 'coverage',
         build: 'bin',
         debug: 'bin/debug',
-        release: 'bin/release',
-        full: 'bin/full'
+        release: 'bin/release'
     };
     
     var fileLists = {
@@ -39,21 +38,6 @@ module.exports = function (grunt) {
             'node_modules/bootstrap/dist/fonts/*.*'
         ]
     };
-    
-    function pathMap(location, relativePath) {
-        var isNot = relativePath.length > 0 && relativePath[0] === '!';
-        var path = isNot ? relativePath.slice(1) : relativePath;
-        var first = isNot ? '!' : '';
-        
-        return '{0}{1}/{2}'
-            .replace('{0}', first)
-            .replace('{1}', location)
-            .replace('{2}', path);
-    }
-    
-    function fullPathMap(relativePath) {
-        return pathMap(filePaths.full, relativePath);
-    }
     
     grunt.file.readJSON('package.json');
 
@@ -127,6 +111,7 @@ module.exports = function (grunt) {
         // Debug Portion
         'concat': {
             jsScripts: {
+                options: { sourceMap: true },
                 src: fileLists.appScripts,
                 dest: '<%=paths.debug%>/scripts/ztimer.scripts.js'
             },
@@ -214,44 +199,6 @@ module.exports = function (grunt) {
             releaseIndex: {
                 src: 'index.html',
                 dest: '<%=paths.release%>/index.html'
-            },
-            // Full Files
-            fullScripts:  {
-                expand: true,
-                src: fileLists.appScripts,
-                filter: 'isFile',
-                dest: '<%=paths.full%>/'
-            },
-            fullCss: {
-                expand: true, 
-                src: fileLists.appCss, 
-                filter: 'isFile',
-                dest: '<%=paths.full%>/'
-            },
-            fullTemplates: {
-                expand: true,
-                src: fileLists.appHtml,
-                filter: 'isFile',
-                dest: '<%=paths.full%>/'
-            },
-            fullVendor: {
-                expand: true, 
-                src: fileLists.vendorScripts,
-                dest: '<%=paths.full%>/'
-            },
-            fullVendorCss: {
-                expand: true, 
-                src: fileLists.vendorCss,
-                dest: '<%=paths.full%>/'
-            },
-            fullFonts: {
-                expand: true,
-                src: fileLists.fonts, 
-                dest: '<%=paths.full%>/'
-            },
-            fullIndex: {
-                src: 'index.full.html',
-                dest: '<%=paths.full%>/index.html'
             }
         },
         'string-replace' : {
@@ -303,45 +250,6 @@ module.exports = function (grunt) {
                     ]
                 }
             }
-        },
-        'tags' : {
-            options: {
-                scriptTemplate: '<script src="{{ path }}"></script>',
-                linkTemplate: '<link rel="stylesheet" href="{{ path }}" />',
-            },
-            fullvendorcss: {
-                options: {
-                    openTag: '<!--start vendor css-->',
-                    closeTag: '<!--end vendor css-->'
-                },
-                src: fileLists.vendorCss.map(fullPathMap),
-                dest: '<%=paths.full%>/index.html'
-            },
-            fullcss: {
-                options: {
-                    openTag: '<!--start app css-->',
-                    closeTag: '<!--end app css-->'
-                },
-                src: fileLists.appCss.map(fullPathMap),
-                dest: '<%=paths.full%>/index.html'
-            },
-            fullVendorScripts: {
-                options: {
-                    openTag: '<!--start vendor scripts-->',
-                    closeTag: '<!--end vendor scripts-->',
-                },
-                src: fileLists.vendorScripts.map(fullPathMap),
-                dest: '<%=paths.full%>/index.html'
-            },
-            
-            fullScripts: {
-                options: {
-                    openTag: '<!--start app scripts-->',
-                    closeTag: '<!--end app scripts-->',
-                },
-                src: fileLists.appScripts.map(fullPathMap),
-                dest: '<%=paths.full%>/index.html',
-            }
         }
     });
 
@@ -349,13 +257,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bootlint');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-spritesmith');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-string-replace');
-    grunt.loadNpmTasks('grunt-script-link-tags');
     
     grunt.registerTask('check', [
         'jshint',
@@ -368,8 +274,7 @@ module.exports = function (grunt) {
         'uglify',
         'cssmin',
         'copy',
-        'string-replace',
-        'tags'
+        'string-replace'
     ]);
     
     grunt.registerTask('default', [
