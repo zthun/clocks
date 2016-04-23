@@ -7,7 +7,7 @@ module.exports = function (grunt) {
         coverage: 'coverage',
         build: 'bin',
         debug: 'bin/debug',
-        release: 'bin/release'
+        release: 'bin/release',
     };
     
     var fileLists = {
@@ -28,11 +28,18 @@ module.exports = function (grunt) {
             'app/**/*.js',
             '!app/**/*.spec.js'
         ],
+        tempScripts: [
+            '<%=paths.temp%>/*.js'
+        ],
+        testScripts: [
+            'app/**/*.spec.js'
+        ],
         appCss: [
             'content/**/*.css'
         ],
         appHtml: [
-            'app/**/*.html'
+            'app/**/*.html',
+            'index.html'
         ],
         fonts: [
             'node_modules/bootstrap/dist/fonts/*.*'
@@ -46,10 +53,9 @@ module.exports = function (grunt) {
         'paths': filePaths,
         // Pre Processing 
         'clean': [
-            '<%=paths.build %>',
+            '<%=paths.build%>',
             '<%=paths.coverage%>'
         ],
-
         // Checks
         'jshint': {
             options: {
@@ -65,13 +71,14 @@ module.exports = function (grunt) {
                 unused: true,
                 undef: true
             },
+            self: {
+                files: {
+                    src: ['gruntfile.js']
+                }
+            },
             main: {
                 files: {
-                    src: [
-                        'app/**/*.js',
-                        '!app/**/*.spec.js',
-                        'gruntfile.js'
-                    ]
+                    src: fileLists.appScripts
                 }
             },
             test: {
@@ -80,9 +87,7 @@ module.exports = function (grunt) {
                     jasmine: true
                 },
                 files: {
-                    src: [
-                        'app/**/*.spec.js'
-                    ]
+                    src: fileLists.testScripts
                 }
             }
         },
@@ -98,10 +103,7 @@ module.exports = function (grunt) {
                     'W005': ['app/**/*.html', 'index.html']
                 }
             },
-            files: [
-                'app/**/*.html',
-                'index.html'
-            ]
+            files: fileLists.appHtml
         },
         'karma': {
             phantomjs: {
@@ -112,7 +114,7 @@ module.exports = function (grunt) {
         'concat': {
             jsScripts: {
                 options: { sourceMap: true },
-                src: fileLists.appScripts,
+                src: fileLists.appScripts.concat(fileLists.tempScripts),
                 dest: '<%=paths.debug%>/scripts/ztimer.scripts.js'
             },
             jsVendor: {
@@ -126,6 +128,32 @@ module.exports = function (grunt) {
             cssVendor: {
                 src: fileLists.vendorCss,
                 dest: '<%=paths.debug%>/content/css/ztimer.vendor.css'
+            }
+        },
+        'ngtemplates': {
+            app: {
+                options: {
+                    module: 'ZTimer',
+                    append: true,
+                    bootstrap: function (module, script) {
+                        var scriptTemplate = [
+                            '',
+                            '(function () { angular.module("{0}").run(ZCacheTemplates);',
+                            'ZCacheTemplates.$inject=["$templateCache"];',
+                            'function ZCacheTemplates($templateCache) {',
+                            '{1}',
+                            '}})();',
+                            ''
+                        ];
+                        return scriptTemplate
+                            .join('\n')
+                            .replace('{0}', module)
+                            .replace('{1}', script);
+                    }
+                },
+                src: fileLists.appHtml.concat('!index.html'),
+                dest: '<%=concat.jsScripts.dest%>'
+                //dest: '<%=paths.debug%>/scripts/ztimer.templates.js'
             }
         },
         // Release Portion
@@ -164,12 +192,6 @@ module.exports = function (grunt) {
         // Post Processing
         'copy': {
             // Debug Files
-            debugTemplates: {
-                expand: true,
-                src: fileLists.appHtml,
-                filter: 'isFile',
-                dest: '<%=paths.debug%>/'
-            },
             debugFonts: {
                 expand: true,
                 flatten: true,
@@ -182,13 +204,6 @@ module.exports = function (grunt) {
                 dest: '<%=paths.debug%>/index.html'
             },
             // Release Files
-            releaseTemplates: {
-                expand: true,
-                cwd: '<%=paths.debug%>',
-                src: fileLists.appHtml,
-                filter: 'isFile',
-                dest: '<%=paths.release%>/'
-            },
             releaseFonts: {
                 expand: true,
                 flatten: true,
@@ -207,22 +222,11 @@ module.exports = function (grunt) {
                     '<%=paths.debug%>/index.html' : '<%=paths.debug%>/index.html'
                 },
                 options: {
-                    replacements: [{
-                            pattern: '{VendorJs}',
-                            replacement: 'ztimer.vendor.js'
-                        },{
-                            pattern: '{ScriptsJs}',
-                            replacement: 'ztimer.scripts.js'
-                        },{
-                            pattern: '{VendorCss}',
-                            replacement: 'ztimer.vendor.css'
-                        },{
-                            pattern: '{ContentCss}',
-                            replacement: 'ztimer.content.css'
-                        },{
-                            pattern: '{SpritesCss}',
-                            replacement: 'ztimer.sprites.css'
-                        }
+                    replacements: [
+                        { pattern: '{VendorJs}', replacement: 'ztimer.vendor.js' },
+                        { pattern: '{ScriptsJs}', replacement: 'ztimer.scripts.js' },
+                        { pattern: '{VendorCss}', replacement: 'ztimer.vendor.css' },
+                        { pattern: '{ContentCss}', replacement: 'ztimer.content.css' }
                     ]
                 }
             },
@@ -231,22 +235,11 @@ module.exports = function (grunt) {
                     '<%=paths.release%>/index.html' : '<%=paths.release%>/index.html'
                 },
                 options: {
-                    replacements: [{
-                            pattern: '{VendorJs}',
-                            replacement: 'ztimer.vendor.min.js'
-                        },{
-                            pattern: '{ScriptsJs}',
-                            replacement: 'ztimer.scripts.min.js'
-                        },{
-                            pattern: '{VendorCss}',
-                            replacement: 'ztimer.vendor.min.css'
-                        },{
-                            pattern: '{ContentCss}',
-                            replacement: 'ztimer.content.min.css'
-                        },{
-                            pattern: '{SpritesCss}',
-                            replacement: 'ztimer.sprites.min.css'
-                        }
+                    replacements: [
+                        { pattern: '{VendorJs}', replacement: 'ztimer.vendor.min.js' },
+                        { pattern: '{ScriptsJs}', replacement: 'ztimer.scripts.min.js'},
+                        { pattern: '{VendorCss}', replacement: 'ztimer.vendor.min.css' },
+                        { pattern: '{ContentCss}', replacement: 'ztimer.content.min.css' }
                     ]
                 }
             }
@@ -262,6 +255,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-string-replace');
+    grunt.loadNpmTasks('grunt-angular-templates');
     
     grunt.registerTask('check', [
         'jshint',
@@ -271,6 +265,7 @@ module.exports = function (grunt) {
     
     grunt.registerTask('rebuild', [
         'concat',
+        'ngtemplates',
         'uglify',
         'cssmin',
         'copy',
