@@ -1,14 +1,7 @@
-/*global module*/
+/*global module, require*/
 
 module.exports = function (grunt) {
     'use strict';
-
-    var filePaths = {
-        coverage: 'coverage',
-        build: 'bin',
-        debug: 'bin/debug',
-        release: 'bin/release',
-    };
     
     var fileLists = {
         vendorScripts: [
@@ -28,9 +21,6 @@ module.exports = function (grunt) {
             'app/**/*.js',
             '!app/**/*.spec.js'
         ],
-        tempScripts: [
-            '<%=paths.temp%>/*.js'
-        ],
         testScripts: [
             'app/**/*.spec.js'
         ],
@@ -45,12 +35,17 @@ module.exports = function (grunt) {
             'node_modules/bootstrap/dist/fonts/*.*'
         ]
     };
-    
-    grunt.file.readJSON('package.json');
 
+    require('load-grunt-tasks')(grunt);
+    
     grunt.initConfig({
-        // Configuration
-        'paths': filePaths,
+        // Output paths
+        'paths': {
+            coverage: 'coverage',
+            build: 'dist',
+            debug: 'dist/debug',
+            release: 'dist/release',
+        },
         // Pre Processing 
         'clean': [
             '<%=paths.build%>',
@@ -114,7 +109,7 @@ module.exports = function (grunt) {
         'concat': {
             jsScripts: {
                 options: { sourceMap: true },
-                src: fileLists.appScripts.concat(fileLists.tempScripts),
+                src: fileLists.appScripts,
                 dest: '<%=paths.debug%>/scripts/ztimer.scripts.js'
             },
             jsVendor: {
@@ -153,7 +148,6 @@ module.exports = function (grunt) {
                 },
                 src: fileLists.appHtml.concat('!index.html'),
                 dest: '<%=concat.jsScripts.dest%>'
-                //dest: '<%=paths.debug%>/scripts/ztimer.templates.js'
             }
         },
         // Release Portion
@@ -245,17 +239,6 @@ module.exports = function (grunt) {
             }
         }
     });
-
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-bootlint');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-string-replace');
-    grunt.loadNpmTasks('grunt-angular-templates');
     
     grunt.registerTask('check', [
         'jshint',
@@ -263,7 +246,7 @@ module.exports = function (grunt) {
         'karma'
     ]);
     
-    grunt.registerTask('rebuild', [
+    grunt.registerTask('build', [
         'concat',
         'ngtemplates',
         'uglify',
@@ -275,6 +258,6 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [
         'clean',
         'check',
-        'rebuild'
+        'build'
     ]);
 };
