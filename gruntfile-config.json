@@ -1,9 +1,9 @@
 {
     "paths": {
-        "build": "build",
-        "coverage": "build/coverage",
-        "dist": "build/dist",
-        "temp": "build/temp"
+        "build": "bin",
+        "coverage": "bin/coverage",
+        "dist": "bin/dist",
+        "temp": "bin/temp"
     },
     
     "fileLists": {

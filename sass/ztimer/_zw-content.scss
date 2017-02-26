@@ -1,16 +1,24 @@
+$margin-centered: auto;
+$body-margin-base: 2em;
+$body-margin-top: $body-margin-base;
+$body-margin-bottom: $body-margin-base;
+$body-width: 60%;
+
 body {
-    position: absolute;
+    bottom: 0;
     left: 0;
+    margin: $margin-centered;
+    margin-bottom: $body-margin-bottom;
+    margin-top: $body-margin-top;
+    overflow: auto;
+    position: absolute;
     right: 0;
     top: 0;
-    bottom: 0;
-    width: 60%;
-    margin: auto;
-    margin-top: 2em;
-    margin-bottom: 2em;
-    overflow: auto;
+    width: $body-width;
 }
-header, article {
+
+header,
+article {
+    margin: $margin-centered;
     text-align: center;
-    margin: auto;
 }

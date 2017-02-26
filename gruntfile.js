@@ -24,17 +24,7 @@ module.exports = function (grunt) {
         // Checks
         jshint: {
             options: {
-                curly: true,
-                eqeqeq: true,
-                forin: true,
-                funcscope: true,
-                freeze: true,
-                futurehostile: true,
-                nonbsp: true,
-                nonew: true,
-                notypeof: true,
-                unused: true,
-                undef: true
+                jshintrc: 'node_modules/zwebstyles/.jshintrc'
             },
             self: {
                 files: {
@@ -47,10 +37,6 @@ module.exports = function (grunt) {
                 }
             },
             test: {
-                options: {
-                    freeze: false,
-                    jasmine: true
-                },
                 files: {
                     src: fileLists.testScripts
                 }
@@ -69,6 +55,20 @@ module.exports = function (grunt) {
                 }
             },
             files: fileLists.appHtml
+        },
+        htmlhint: {
+            options: {
+                htmlhintrc: 'node_modules/zwebstyles/.htmlhintrc'
+            },
+            app: {
+                src: fileLists.appHtml
+            }
+        },
+        sasslint: {
+            options: {
+                configFile: 'node_modules/zwebstyles/.sasslint.yml',
+            },
+            target: ['sass/**/*.scss']
         },
         karma: {
             phantomjs: {
@@ -137,6 +137,8 @@ module.exports = function (grunt) {
     grunt.registerTask('check', [
         'jshint',
         'bootlint',
+        'htmlhint',
+        'sasslint',
         'karma'
     ]);
     

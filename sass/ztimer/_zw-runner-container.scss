@@ -1,28 +1,42 @@
+$runner-container-border-size: .5em;
+$runner-container-border-style: solid;
+$runner-container-border-color: #c0c0c0;
+
 .runner-container {
     margin-top: 1em;
-}
-    .runner-container .close {
+
+    .close {
         font-size: 2em;
     }
-    .runner-container>div {
+
+    >div {
         max-width: 25em;
         text-align: center;
         margin: auto;
-        border: 0.5em solid silver;
+        border: $runner-container-border-size $runner-container-border-style $runner-container-border-color;
         border-radius: 1em;
         margin-top: 1em;
         margin-bottom: 1em;
         padding: 1em;
-    }
-    .runner-container>div.ng-enter {
-        animation: zoomIn 0.5s;
-    }
-    .runner-container>div.ng-leave {
-        animation: zoomOut 0.5s;
-    }
-        .runner-container>div>div>span {
-            font-size: 3em;
+        
+        &.ng-enter {
+            animation: zoomIn .5s;
         }
-        .runner-container>div>div>div>button {
-            margin-top: 1em;
+        
+        &.ng-leave {
+            animation: zoomOut .5s;
         }
+        
+        >div {
+            span {
+                font-size: 3em;
+            }
+            
+            >div {
+                button {
+                    margin-top: 1em;
+                }
+            }
+        }
+    }
+}

@@ -44,7 +44,7 @@ module.exports = function (config) {
         // Reporter option for code coverage.
         coverageReporter: {
             format: 'html',
-            dir: 'build/coverage'
+            dir:  buildConfig.paths.coverage
         },
 
         // web server port
