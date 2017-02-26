@@ -3,56 +3,26 @@
 module.exports = function (grunt) {
     'use strict';
     
-    var fileLists = {
-        vendorScripts: [
-            'node_modules/jquery/dist/jquery.js',
-            'node_modules/angular/angular.js',
-            'node_modules/angular-animate/angular-animate.js',
-            'node_modules/angular-ui-router/release/angular-ui-router.js',
-            'node_modules/zpubsub/bin/zpubsub.js',
-            'node_modules/bootstrap/dist/js/bootstrap.js'
-        ],
-        vendorCss: [
-            'node_modules/bootstrap/dist/css/bootstrap.css',
-            'node_modules/animate.css/animate.css'
-        ],
-        appScripts: [
-            'app/ztimer.js',
-            'app/**/*.js',
-            '!app/**/*.spec.js'
-        ],
-        testScripts: [
-            'app/**/*.spec.js'
-        ],
-        appCss: [
-            'content/**/*.css'
-        ],
-        appHtml: [
-            'app/**/*.html',
-            'index.html'
-        ],
-        fonts: [
-            'node_modules/bootstrap/dist/fonts/*.*'
-        ]
-    };
+    var gruntConfig = require('./gruntfile-config.json');
+    var fileLists = gruntConfig.fileLists;
+    var dbg = grunt.option('--dbg');
 
     require('load-grunt-tasks')(grunt);
     
     grunt.initConfig({
         // Output paths
-        'paths': {
-            coverage: 'coverage',
-            build: 'dist',
-            debug: 'dist/debug',
-            release: 'dist/release',
+        paths: gruntConfig.paths,
+        
+        // Cleanup 
+        clean: {
+            build: '<%=paths.build%>',
+            coverage: '<%=paths.coverage%>',
+            temp: '<%=paths.temp%>',
+            dist: '<%=paths.dist%>'
         },
-        // Pre Processing 
-        'clean': [
-            '<%=paths.build%>',
-            '<%=paths.coverage%>'
-        ],
+        
         // Checks
-        'jshint': {
+        jshint: {
             options: {
                 curly: true,
                 eqeqeq: true,
@@ -86,7 +56,7 @@ module.exports = function (grunt) {
                 }
             }
         },
-        'bootlint': {
+        bootlint: {
             options: {
                 showallerrors: true,
                 relaxerror: {
@@ -100,142 +70,66 @@ module.exports = function (grunt) {
             },
             files: fileLists.appHtml
         },
-        'karma': {
+        karma: {
             phantomjs: {
                 configFile: 'karma.conf.js'
             }
         },
-        // Debug Portion
-        'concat': {
-            jsScripts: {
-                options: { sourceMap: true },
-                src: fileLists.appScripts,
-                dest: '<%=paths.debug%>/scripts/ztimer.scripts.js'
-            },
-            jsVendor: {
-                src: fileLists.vendorScripts,
-                dest: '<%=paths.debug%>/scripts/ztimer.vendor.js'
-            },
-            cssContent: {
-                src: fileLists.appCss,
-                dest: '<%=paths.debug%>/content/css/ztimer.content.css'
-            },
-            cssVendor: {
-                src: fileLists.vendorCss,
-                dest: '<%=paths.debug%>/content/css/ztimer.vendor.css'
-            }
-        },
-        'ngtemplates': {
+        
+        // Build
+        ngtemplates: {
             app: {
                 options: {
                     module: 'ZTimer',
-                    append: true,
-                    bootstrap: function (module, script) {
-                        var scriptTemplate = [
-                            '',
-                            '(function () { angular.module("{0}").run(ZCacheTemplates);',
-                            'ZCacheTemplates.$inject=["$templateCache"];',
-                            'function ZCacheTemplates($templateCache) {',
-                            '{1}',
-                            '}})();',
-                            ''
-                        ];
-                        return scriptTemplate
-                            .join('\n')
-                            .replace('{0}', module)
-                            .replace('{1}', script);
-                    }
                 },
                 src: fileLists.appHtml.concat('!index.html'),
-                dest: '<%=concat.jsScripts.dest%>'
+                dest: '<%=paths.temp%>/js/ztimer.templates.js'
             }
         },
-        // Release Portion
-        'uglify': {
+        uglify: {
+            options: {
+                sourceMap: dbg,
+                sourceMapIncludeSources: true
+            },
             scripts: {
-                files: {
-                    '<%=paths.release%>/scripts/ztimer.scripts.min.js' : [
-                        '<%=paths.debug%>/scripts/ztimer.scripts.js'
-                    ]
-                }
+                src: fileLists.appScripts,
+                dest: '<%=paths.dist%>/scripts/ztimer.min.js'
             },
             vendor: {
-                files: {
-                    '<%=paths.release%>/scripts/ztimer.vendor.min.js' : [
-                        '<%=paths.debug%>/scripts/ztimer.vendor.js'    
-                    ]
-                }
+                src: fileLists.vendorScripts,
+                dest: '<%=paths.dist%>/scripts/ztimer.vendor.min.js'
             }
         },
-        'cssmin': {
-            content: {
-                files: {
-                    '<%=paths.release%>/content/css/ztimer.content.min.css' : [
-                        '<%=paths.debug%>/content/css/ztimer.content.css'
-                    ]
-                }
+        sass: {
+            options: {
+                sourceMap: dbg,
+                sourceMapContents: true,
+                outputStyle: 'compact'
             },
             vendor: {
+                options: {
+                    includePaths: fileLists.vendorSass
+                },
                 files: {
-                    '<%=paths.release%>/content/css/ztimer.vendor.min.css' : [
-                        '<%=paths.debug%>/content/css/ztimer.vendor.css'
-                    ]
+                    '<%=paths.dist%>/content/css/ztimer.vendor.min.css': 'sass/vendor/ztimer.vendor.scss'
+                }
+            },
+            ztimer: {
+                files: {
+                    '<%=paths.dist%>/content/css/ztimer.min.css': 'sass/ztimer/ztimer.scss'
                 }
             }
         },
-        // Post Processing
-        'copy': {
-            // Debug Files
-            debugFonts: {
+        copy: {
+            bootstrapFonts: {
                 expand: true,
-                flatten: true,
-                src: fileLists.fonts,
-                filter: 'isFile',
-                dest: '<%=paths.debug%>/content/fonts/'
+                cwd: 'node_modules/bootstrap-sass/assets/fonts/bootstrap',
+                src: ['**'],
+                dest: '<%=paths.dist%>/content/fonts/'
             },
-            debugIndex: {
+            index: {
                 src: 'index.html',
-                dest: '<%=paths.debug%>/index.html'
-            },
-            // Release Files
-            releaseFonts: {
-                expand: true,
-                flatten: true,
-                src: fileLists.fonts,
-                filter: 'isFile',
-                dest: '<%=paths.release%>/content/fonts/'
-            },
-            releaseIndex: {
-                src: 'index.html',
-                dest: '<%=paths.release%>/index.html'
-            }
-        },
-        'string-replace' : {
-            debug: {
-                files: {
-                    '<%=paths.debug%>/index.html' : '<%=paths.debug%>/index.html'
-                },
-                options: {
-                    replacements: [
-                        { pattern: '{VendorJs}', replacement: 'ztimer.vendor.js' },
-                        { pattern: '{ScriptsJs}', replacement: 'ztimer.scripts.js' },
-                        { pattern: '{VendorCss}', replacement: 'ztimer.vendor.css' },
-                        { pattern: '{ContentCss}', replacement: 'ztimer.content.css' }
-                    ]
-                }
-            },
-            release: {
-                files: {
-                    '<%=paths.release%>/index.html' : '<%=paths.release%>/index.html'
-                },
-                options: {
-                    replacements: [
-                        { pattern: '{VendorJs}', replacement: 'ztimer.vendor.min.js' },
-                        { pattern: '{ScriptsJs}', replacement: 'ztimer.scripts.min.js'},
-                        { pattern: '{VendorCss}', replacement: 'ztimer.vendor.min.css' },
-                        { pattern: '{ContentCss}', replacement: 'ztimer.content.min.css' }
-                    ]
-                }
+                dest: '<%=paths.dist%>/index.html'
             }
         }
     });
@@ -247,17 +141,16 @@ module.exports = function (grunt) {
     ]);
     
     grunt.registerTask('build', [
-        'concat',
+        'sass',
         'ngtemplates',
         'uglify',
-        'cssmin',
-        'copy',
-        'string-replace'
+        'copy'
     ]);
     
     grunt.registerTask('default', [
         'clean',
         'check',
-        'build'
+        'build',
+        'clean:temp'
     ]);
 };

@@ -1,7 +1,8 @@
 /*global module*/
 
-// // Karma configuration
-// Generated on Mon Jun 09 2014 16:00:57 GMT-0500 (CDT)
+var dbg = process.argv.some(function(x){ return x === '--debug'; });
+var reporters = dbg ? ['kjhtml'] : ['progress', 'coverage'];
+var buildConfig = require('./gruntfile-config.json');
 
 module.exports = function (config) {
     'use strict';
@@ -16,15 +17,12 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
-        files: [
-            'node_modules/angular/angular.js',
-            'node_modules/angular-animate/angular-animate.js',
-            'node_modules/angular-ui-router/release/angular-ui-router.js',
-            'node_modules/angular-mocks/angular-mocks.js',
-            'node_modules/zpubsub/bin/zpubsub.js',
-            'app/ztimer.js',
-            'app/**/*.js'
-        ],
+        files: buildConfig.fileLists.vendorScripts
+                .concat(buildConfig.fileLists.testFrameworkScripts)
+                .concat([
+                    'app/ztimer.js',
+                    'app/**/*.js'
+                ]),
 
         // list of files to exclude
         exclude: [
@@ -41,7 +39,13 @@ module.exports = function (config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'coverage', 'kjhtml'],
+        reporters: reporters,
+        
+        // Reporter option for code coverage.
+        coverageReporter: {
+            format: 'html',
+            dir: 'build/coverage'
+        },
 
         // web server port
         port: 9999,
@@ -62,6 +66,6 @@ module.exports = function (config) {
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        singleRun: true
+        singleRun: !dbg
     });
 };
