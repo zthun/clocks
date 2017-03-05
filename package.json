@@ -1,7 +1,7 @@
 {
   "name": "ztimer.ui",
   "version": "1.0.0",
-  "description": "The user interface for a timer application written in Javascript",
+  "description": "A simple timer application written in javascript.",
   "license": "MIT",
   "repository": {
     "type": "git",
