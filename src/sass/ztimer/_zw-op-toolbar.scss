@@ -1,0 +1,13 @@
+$op-toolbar-font-size: 1.5em;
+
+.op-toolbar {
+    .btn {
+        font-size: $op-toolbar-font-size;
+    }
+
+    &.btn-toolbar {
+        .btn-group {
+            float: none;
+        }
+    }
+}
