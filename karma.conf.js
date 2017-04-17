@@ -2,7 +2,7 @@
 
 var dbg = process.argv.some(function(x){ return x === '--debug'; });
 var reporters = dbg ? ['kjhtml'] : ['progress', 'coverage'];
-var buildConfig = require('./gruntfile-config.json');
+var buildConfig = require('./config/gruntfile-config');
 
 module.exports = function (config) {
     'use strict';
@@ -20,20 +20,20 @@ module.exports = function (config) {
         files: buildConfig.fileLists.vendorScripts
                 .concat(buildConfig.fileLists.testFrameworkScripts)
                 .concat([
-                    'app/ztimer.js',
-                    'app/**/*.js'
+                    'src/app/ztimer.js',
+                    'src/app/**/*.js'
                 ]),
 
         // list of files to exclude
         exclude: [
-            'app/ztimer.config.js'
+            'src/app/ztimer.config.js'
         ],
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'app/**/*.controller.js' : 'coverage',
-            'app/**/*.service.js' : 'coverage'
+            'src/app/**/*.controller.js' : 'coverage',
+            'src/app/**/*.service.js' : 'coverage'
         },
 
         // test results reporter to use
