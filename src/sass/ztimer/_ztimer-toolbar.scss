@@ -1,0 +1,18 @@
+$ztimer-toolbar-margin-base: .5em;
+$ztimer-toolbar-margin-top: $ztimer-toolbar-margin-base;
+$ztimer-toolbar-margin-bottom: $ztimer-toolbar-margin-base;
+
+$ztimer-toolbar-font-size: 1.25em;
+
+.ztimer-toolbar {
+    margin-top: $ztimer-toolbar-margin-top;
+    margin-bottom: $ztimer-toolbar-margin-bottom;
+    
+    span {
+        font-size: $ztimer-toolbar-font-size;
+    }
+    
+    .btn-group {
+        float: none;
+    }
+}
