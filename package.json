@@ -7,9 +7,6 @@
     "type": "git",
     "url": "http://bitbucket.org/zthun/ztimer.ui"
   },
-  "scripts": {
-    "prepublish": "grunt"
-  },
   "keywords": [
     "timer",
     "ztimer"
