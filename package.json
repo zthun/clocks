@@ -26,6 +26,7 @@
     "grunt-sass": "=2.0.0",
     "grunt-sass-lint": "=0.2.2",
     "grunt-travis-lint": "0.0.3",
+    "grunt-yamllint": "=0.3.0",
     "jasmine-core": "=2.5.2",
     "karma": "=1.6.0",
     "karma-coverage": "=1.1.1",

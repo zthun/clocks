@@ -19,6 +19,7 @@ module.exports = function (grunt) {
         bootlint: require('./config/gruntfile-bootlint'),
         htmlhint: require('./config/gruntfile-htmlhint'),
         sasslint: require('./config/gruntfile-sasslint'),
+        yamllint: require('./config/gruntfile-yamllint'),
         karma: require('./config/gruntfile-karma'),
 
         // Build
@@ -38,6 +39,7 @@ module.exports = function (grunt) {
         'bootlint',
         'htmlhint',
         'sasslint',
+        'yamllint',
         'travis-lint',
         'karma'
     ]);
