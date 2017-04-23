@@ -1,11 +1,31 @@
 language: node_js
+
 node_js:
     - 7.9.0
+
+branches:
+  only:
+    - master
+    - latest
+
 before_install:
-    - npm install -g grunt-cli 
-install: 
-    - shippable_retry npm install 
-script:
-    - grunt 
+    - export IMAGE_NAME=zthun/ztimer
+    - npm install -g grunt-cli
 
+install:
+    - shippable_retry npm install
 
+build:
+    ci:
+      - grunt
+    post_ci:
+      - |
+        if [ "$IS_PULL_REQUEST" != true ]; then
+          docker build . -t $IMAGE_NAME:$BRANCH
+          docker push $IMAGE_NAME:$BRANCH
+        fi
+
+integrations:
+  hub:
+    - integrationName: "dockerhub"
+      type: docker
