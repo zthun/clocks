@@ -4,13 +4,10 @@ node_js:
     - 6.10.2
 
 branches:
-  only:
-    - patch
-    - minor
-    - major
+  exclude:
+    - pipeline
 
 before_install:
-    - export IMAGE_NAME=zthun/ztimer
     - npm install -g grunt-cli
 
 install:
@@ -19,14 +16,3 @@ install:
 build:
     ci:
       - grunt
-    post_ci:
-      - |
-        if [ "$IS_PULL_REQUEST" != true ]; then
-          docker build . -t $IMAGE_NAME:$BRANCH
-          docker push $IMAGE_NAME:$BRANCH
-        fi
-
-integrations:
-  hub:
-    - integrationName: "dockerhub"
-      type: docker
