@@ -5,6 +5,7 @@ node_js:
 
 branches:
   exclude:
+    # The pipeline branch contains all the jobs and resources to deploy the build.
     - pipeline
 
 before_install:
@@ -14,11 +15,24 @@ install:
     - shippable_retry npm install
 
 build:
+    pre_ci:
+      - export IMAGE_NAME=zthun/ztimer
+      - export TAG_NAME=rc
     ci:
       - grunt
-      - docker build . -t ztimer:ci
+      # Regardless of the branch, we need to test the docker build to make sure
+      # it works.
+      - docker build . -t $IMAGE_NAME:$TAG_NAME
     post_ci:
       - mkdir -p shippable/testresults
       - mkdir -p shippable/codecoverage
       - cp -r build/coverage/cobertura.xml shippable/codecoverage/coverage.xml
       - cp -r build/reports/junit.xml shippable/testresults/testresults.xml
+      # If this is the release branch, then we actully want to push the image
+      # to docker hub to kick off the pipeline.
+      - if[ "$BRANCH" == "release" ]; then docker push $IMAGE_NAME:$TAG_NAME
+
+integrations:
+  hub:
+    - integrationName: dockerhub
+      type: docker
