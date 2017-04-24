@@ -16,3 +16,9 @@ install:
 build:
     ci:
       - grunt
+      - docker build . -t ztimer:ci
+
+#integrations:
+#  hub:
+#    - integrationName: "dockerhub"
+#      type: docker
