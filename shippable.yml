@@ -22,8 +22,3 @@ build:
       - mkdir -p shippable/codecoverage
       - cp -r build/coverage/cobertura.xml shippable/codecoverage/coverage.xml
       - cp -r build/reports/junit.xml shippable/testresults/testresults.xml
-
-#integrations:
-#  hub:
-#    - integrationName: "dockerhub"
-#      type: docker
