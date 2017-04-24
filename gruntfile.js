@@ -40,7 +40,6 @@ module.exports = function (grunt) {
         'htmlhint',
         'sasslint',
         'yamllint',
-        'travis-lint',
         'karma'
     ]);
 
