@@ -1,11 +1,12 @@
 module.exports = {
     paths: {
         build: 'build',
+        reports: 'build/reports',
         coverage: 'build/coverage',
         dist: 'build/dist',
         temp: 'build/temp'
     },
-    
+
     fileLists: {
         vendorScripts: [
             'node_modules/jquery/dist/jquery.js',

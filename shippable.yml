@@ -18,8 +18,10 @@ build:
       - grunt
       - docker build . -t ztimer:ci
     post_ci:
+      - mkdir -p shippable/testresults
       - mkdir -p shippable/codecoverage
       - cp -r build/coverage/cobertura.xml shippable/codecoverage/coverage.xml
+      - cp -r build/reports/junit.xml shippable/testresults/testresults.xml
 
 #integrations:
 #  hub:

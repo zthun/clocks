@@ -1,7 +1,7 @@
 /*global module*/
 
 var dbg = process.argv.some(function(x){ return x === '--debug'; });
-var reporters = dbg ? ['kjhtml'] : ['progress', 'coverage'];
+var reporters = dbg ? ['kjhtml'] : ['progress', 'junit', 'coverage'];
 var buildConfig = require('./config/gruntfile-config');
 
 module.exports = function (config) {
@@ -48,6 +48,13 @@ module.exports = function (config) {
               { type: 'html', subdir: 'html' },
               { type: 'cobertura', subdir: '.', file: 'cobertura.xml' }
             ]
+        },
+
+        // Reporter options for junit test reports
+        junitReporter: {
+          outputDir: buildConfig.paths.reports,
+          outputFile: 'junit.xml',
+          useBrowserName: false
         },
 
         // web server port
