@@ -40,11 +40,14 @@ module.exports = function (config) {
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
         reporters: reporters,
-        
+
         // Reporter option for code coverage.
         coverageReporter: {
-            format: 'html',
-            dir:  buildConfig.paths.coverage
+            dir: buildConfig.paths.coverage,
+            reporters: [
+              { type: 'html', subdir: 'html' },
+              { type: 'cobertura', subdir: '.', file: 'cobertura.xml' }
+            ]
         },
 
         // web server port

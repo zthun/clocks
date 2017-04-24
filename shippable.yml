@@ -17,6 +17,9 @@ build:
     ci:
       - grunt
       - docker build . -t ztimer:ci
+    post_ci:
+      - mkdir -p shippable/codecoverage
+      - cp -r build/coverage/cobertura.xml shippable/codecoverage/coverage.xml
 
 #integrations:
 #  hub:
