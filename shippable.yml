@@ -1,12 +1,13 @@
 language: node_js
 
 node_js:
-    - 7.9.0
+    - 6.10.2
 
 branches:
   only:
-    - master
-    - latest
+    - patch
+    - minor
+    - major
 
 before_install:
     - export IMAGE_NAME=zthun/ztimer
