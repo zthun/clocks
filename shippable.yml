@@ -27,7 +27,12 @@ build:
       - cp -r build/reports/junit.xml shippable/testresults/testresults.xml
       # If this is the release branch, then we actully want to push the image
       # to docker hub to kick off the pipeline.
-      - if[ "$BRANCH" == "release" ]; then docker push zthun/ztimer:rc fi
+      - |
+        if [ "$BRANCH" == "release" ]; then
+          docker push zthun/ztimer:rc
+        else
+          echo "Skipping dockerhub deploy due to non release."
+        fi
 
 integrations:
   hub:
