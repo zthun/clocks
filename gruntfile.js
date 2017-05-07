@@ -26,7 +26,10 @@ module.exports = function (grunt) {
         ngtemplates: require('./config/gruntfile-ngtemplates'),
         uglify: require('./config/gruntfile-uglify'),
         sass: require('./config/gruntfile-sass'),
-        copy: require('./config/gruntfile-copy')
+        copy: require('./config/gruntfile-copy'),
+
+        // Release
+        release: require('./config/gruntfile-release')
     };
 
     gruntConfig.uglify.options.sourceMap = dbg;
