@@ -23,3 +23,11 @@ jobs:
       - IN: ztimer-manifest
       - IN: zthunworks-aws-stage-cluster
       - TASK: managed
+
+  - name: ztimer-deploy-prod
+    type: deploy
+    steps:
+      - IN: ztimer-deploy-stage
+        switch: off
+      - IN: zthunworks-aws-prod-cluster
+      - TASK: managed

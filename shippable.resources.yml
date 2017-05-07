@@ -1,3 +1,4 @@
+resources: 
 # CLI Configs
   - name: ztimer-docker-cli-config
     type: cliConfig
