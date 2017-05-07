@@ -1,0 +1,26 @@
+resources:
+# Docker Images
+  - name: ztimer-rc-image
+    type: image
+    integration: dockerhub
+    pointer:
+      sourceName: "zthun/ztimer"
+      isPull: false
+    seed:
+      versionName: rc
+
+# Docker Image Options
+  - name: core-docker-options
+    type: dockerOptions
+    version:
+      portMappings:
+        - 80:80
+      publishAllPorts : true
+
+# AWS cluster
+  - name: zthunworks-aws-cluster
+    type: cluster
+    integration: aws
+    pointer:
+      sourceName : "ztimer-stage"
+      region: "us-west-2"

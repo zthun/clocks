@@ -1,0 +1,14 @@
+jobs:
+  - name: ztimer-manifest
+    type: manifest
+    steps:
+      - IN: ztimer-rc-image
+      - IN: core-docker-options
+      - TASK: managed
+
+  - name: ztimer-deploy-stage
+    type: deploy
+    steps:
+      - IN: ztimer-manifest
+      - IN: zthunworks-aws-cluster
+      - TASK: managed
