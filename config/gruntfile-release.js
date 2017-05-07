@@ -1,5 +1,6 @@
 module.exports = {
   options: {
-    npmtag: 'rc'
+    npmtag: 'rc',
+    beforeBump: ['default']
   }
 };

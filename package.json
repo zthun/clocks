@@ -41,10 +41,10 @@
   "dependencies": {
     "angular": "=1.6.4",
     "angular-animate": "=1.6.4",
-    "angular-ui-router": "=1.0.2",
     "animate-sass": "=0.6.6",
     "bootstrap-sass": "=3.3.7",
     "jquery": "=3.2.1",
+    "@uirouter/angularjs": "=1.0.3",
     "zpubsub": "=2.0.2"
   }
 }
