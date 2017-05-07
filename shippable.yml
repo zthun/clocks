@@ -23,7 +23,7 @@ build:
       - grunt
       # Regardless of the branch, we need to test the docker build to make sure
       # it works.
-      - docker build . -t $IMAGE_NAME:$RELEASE_NAME
+      - docker build . -t $IMAGE_NAME:$IMAGE_RELEASE_NAME
     post_ci:
       - mkdir -p $TEST_RESULTS_DIR
       - mkdir -p $CODE_COVERAGE_DIR
