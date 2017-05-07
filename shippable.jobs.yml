@@ -1,7 +1,18 @@
 jobs:
+  - name: ztimer-image
+    type: runCLI
+    steps:
+      - IN: ztimer-docker-cli-config
+      - TASK:
+        - script: npm install ztimer.ui:rc
+        - script: docker build node_modules/ztimer.ui -t zthun/ztimer:rc
+        - script: docker push zthun/ztimer:rc
+      - OUT: ztimer-rc-image
+
   - name: ztimer-manifest
     type: manifest
     steps:
+      - IN: ztimer-image
       - IN: ztimer-rc-image
       - IN: core-docker-options
       - TASK: managed
@@ -10,5 +21,5 @@ jobs:
     type: deploy
     steps:
       - IN: ztimer-manifest
-      - IN: zthunworks-aws-cluster
+      - IN: zthunworks-aws-stage-cluster
       - TASK: managed

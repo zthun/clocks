@@ -1,4 +1,8 @@
-resources:
+# CLI Configs
+  - name: ztimer-docker-cli-config
+    type: cliConfig
+    integration: dockerhub
+
 # Docker Images
   - name: ztimer-rc-image
     type: image
@@ -18,9 +22,16 @@ resources:
       publishAllPorts : true
 
 # AWS cluster
-  - name: zthunworks-aws-cluster
+  - name: zthunworks-aws-stage-cluster
     type: cluster
     integration: aws
     pointer:
-      sourceName : "ztimer-stage"
+      sourceName: "ztimer-stage"
+      region: "us-west-2"
+
+  - name: zthunworks-aws-prod-cluster
+    type: cluster
+    integration: aws
+    pointer:
+      sourceName: "ztimer"
       region: "us-west-2"
