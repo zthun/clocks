@@ -3,11 +3,6 @@ language: node_js
 node_js:
     - 6.10.2
 
-branches:
-  exclude:
-    # The pipeline branch contains all the jobs and resources to deploy the build.
-    - pipeline
-
 env:
   global:
     - TEST_RESULTS_FILE=build/reports/junit.xml
@@ -15,7 +10,7 @@ env:
     - CODE_COVERAGE_FILE=build/coverage/cobertura.xml
     - CODE_COVERAGE_DIR=$SHIPPABLE_REPO_DIR/shippable/codecoverage
     - IMAGE_NAME=zthun/ztimer
-    - RELEASE_NAME=rc
+    - IMAGE_RELEASE_NAME=rc
 
 before_install:
     - npm install -g grunt-cli
@@ -34,11 +29,10 @@ build:
       - mkdir -p $CODE_COVERAGE_DIR
       - cp -r $CODE_COVERAGE_FILE $CODE_COVERAGE_DIR
       - cp -r $TEST_RESULTS_FILE $TEST_RESULTS_DIR
-      # If this is the release branch, then we actully want to push the image
-      # to docker hub to kick off the pipeline.
       - |
-        if [ "$BRANCH" == "release" ]; then
-          docker push $IMAGE_NAME:$RELEASE_NAME
+        if [ $IS_RELEASE ]; then
+          npm whoami
+          docker push $IMAGE_NAME:$IMAGE_RELEASE_NAME
         fi
 
 integrations:
