@@ -4,7 +4,7 @@ jobs:
     steps:
       - IN: ztimer-docker-cli-config
       - TASK:
-        - script: npm install ztimer.ui:rc
+        - script: npm install ztimer.ui@rc
         - script: docker build node_modules/ztimer.ui -t zthun/ztimer:rc
         - script: docker push zthun/ztimer:rc
       - OUT: ztimer-rc-image
