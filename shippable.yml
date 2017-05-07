@@ -10,7 +10,7 @@ env:
     - CODE_COVERAGE_FILE=build/coverage/cobertura.xml
     - CODE_COVERAGE_DIR=$SHIPPABLE_REPO_DIR/shippable/codecoverage
     - IMAGE_NAME=zthun/ztimer
-    - IMAGE_RELEASE_NAME=rc
+    - IMAGE_TAG=rc
 
 before_install:
     - npm install -g grunt-cli
@@ -23,16 +23,16 @@ build:
       - grunt
       # Regardless of the branch, we need to test the docker build to make sure
       # it works.
-      - docker build . -t $IMAGE_NAME:$IMAGE_RELEASE_NAME
+      - docker build . -t $IMAGE_NAME:$IMAGE_TAG
     post_ci:
+      - echo $IS_RELEASE
       - mkdir -p $TEST_RESULTS_DIR
       - mkdir -p $CODE_COVERAGE_DIR
       - cp -r $CODE_COVERAGE_FILE $CODE_COVERAGE_DIR
       - cp -r $TEST_RESULTS_FILE $TEST_RESULTS_DIR
       - |
-        if [ $IS_RELEASE ]; then
-          npm whoami
-          docker push $IMAGE_NAME:$IMAGE_RELEASE_NAME
+        if [ "$IS_RELEASE" == "true" ]; then
+          docker push $IMAGE_NAME:$IMAGE_TAG
         fi
 
 integrations:
