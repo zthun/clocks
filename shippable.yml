@@ -21,19 +21,13 @@ install:
 build:
     ci:
       - grunt
-      # Regardless of the branch, we need to test the docker build to make sure
-      # it works.
       - docker build . -t $IMAGE_NAME:$IMAGE_TAG
+      - npm pack
     post_ci:
-      - echo $IS_RELEASE
       - mkdir -p $TEST_RESULTS_DIR
       - mkdir -p $CODE_COVERAGE_DIR
       - cp -r $CODE_COVERAGE_FILE $CODE_COVERAGE_DIR
       - cp -r $TEST_RESULTS_FILE $TEST_RESULTS_DIR
-      - |
-        if [ "$IS_RELEASE" == "true" ]; then
-          docker push $IMAGE_NAME:$IMAGE_TAG
-        fi
 
 integrations:
   hub:
