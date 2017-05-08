@@ -38,13 +38,14 @@ jobs:
       - IN: ztimer-docker-cli-config
       # - IN: ztimer-deploy-prod
       - TASK:
-        - script: >
-                  NPMVERSION=$(npm dist-tag ls ztimer.ui | grep rc)
-        - script: echo $NPMVERSION
+        - script: SOURCE_IMAGE=zthun/ztimer
+        - script: SOURCE_TAG=rc
+        - script: NPMVERSION=$(npm dist-tag ls ztimer.ui | grep rc)
         - script: docker pull zthun/ztimer:rc
         - script: SEMVAR=${NPMVERSION//rc:/}
-        - script: echo $SEMVAR
-        - script: docker tag zthun/ztimer:rc zthun/ztimer:$SEMVAR
-        - script: docker tag zthun/ztimer:rc zthun/ztimer:latest
-        # - script: docker push zthun:ztimer:$semvar
+        - script: echo Tagging rc version as $SEMVAR.
+        - script: docker tag $SOURCE_IMAGE:$SOURCE_TAG $SOURCE_IMAGE:$SEMVAR
+        - script: echo Tagging rc version as latest.
+        - script: docker tag $SOURCE_IMAGE:$SOURCE_TAG $SOURCE_IMAGE:latest
+        # - script: docker push zthun:ztimer:$SEMVAR
         # - script: docker push zthun:ztimer:latest
