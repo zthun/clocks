@@ -1,14 +1,14 @@
 resources:
 # Parameters
-  - name: ztimer-global-parameters
+  - name: ztimer-project
     type: params
     flags: "ztimer"
     version:
       params:
-        PROJECT_NAME: "ztimer.ui"
-        PROJECT_TITLE: "ztimer"
-        PROJECT_SCOPE: "zthun"
-        PROJECT_TAG: "rc"
+        NAME: "ztimer.ui"
+        TITLE: "ztimer"
+        SCOPE: "zthun"
+        TAG: "rc"
 
 # CLI Configs
   - name: ztimer-docker-cli-config

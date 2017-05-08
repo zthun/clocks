@@ -7,13 +7,15 @@ jobs:
       - IN: ztimer-docker-cli-config
       - IN: ztimer-global-parameters
       - TASK:
-        - script: DOCKER_IMAGE=$PROJECT_SCOPE/$PROJECT_TITLE:$PROJECT_TAG
-        - script: echo Downloading $PROJECT_NAME from NPM.
-        - script: npm install $PROJECT_NAME@$PROJECT_TAG
-        - script: echo Building $DOCKER_IMAGE
-        - script: docker build node_modules/$PROJECT_NAME -t $DOCKER_IMAGE
-        - script: echo Deploying $DOCKER_IMAGE
-        - script: docker push $DOCKER_IMAGE
+        - script: |
+            DOCKER_IMAGE=$ZTIMERPROJECT_PARAMS_SCOPE/$ZTIMERPROJECT_PARAMS_TITLE:$ZTIMERPROJECT_PARAMS_TAG
+            NPM_RELEASE=$ZTIMERPROJECT_PARAMS_NAME@$ZTIMERPROJECT_PARAMS_TAG
+            echo Downloading $NPM_RELEASE from NPM
+            npm install $NPM_RELEASE
+            echo Building $DOCKER_IMAGE
+            docker build node_modules/$ZTIMERPROJECT_PARAMS_NAME -t $DOCKER_IMAGE
+            echo Deploying $DOCKER_IMAGE
+            docker push $DOCKER_IMAGE
       - OUT: ztimer-rc-image
 
   - name: ztimer-manifest
@@ -46,20 +48,20 @@ jobs:
       - IN: ztimer-global-parameters
       # - IN: ztimer-deploy-prod
       - TASK:
-        - script: DOCKER_IMAGE=$PROJECT_SCOPE/$PROJECT_TITLE
-        - script: DOCKER_BUILD=$DOCKER_IMAGE:$PROJECT_TAG
-        - script: echo Releasing $DOCKER_BUILD
-        - script: NPMVERSION=$(npm dist-tag ls $PROJECT_NAME | grep $PROJECT_TAG)
-        - script: docker pull $DOCKER_IMAGE
-        - script: SEMVAR=${NPMVERSION//rc:/}
-        # The echo $SEMVAR trims the string of all whitespace.
-        - script: DOCKER_BUILD_VERSION=$DOCKER_IMAGE:$(echo $SEMVAR)
-        - script: DOCKER_BUILD_LATEST=$DOCKER_IMAGE:latest
-        - script: echo Tagging $DOCKER_BUILD as $DOCKER_BUILD_LATEST
-        - script: docker tag $DOCKER_BUILD $DOCKER_BUILD_LATEST
-        - script: echo Tagging $DOCKER_BUILD as $DOCKER_BUILD_VERSION
-        - script: docker tag $DOCKER_BUILD $DOCKER_BUILD_VERSION
-        - script: echo Deploying $DOCKER_BUILD_VERSION
-        # - script: docker push $DOCKER_BUILD_VERSION
-        - script: echo Deploying $DOCKER_BUILD_LATEST
-        # - script: docker push $DOCKER_BUILD_LATEST
+        - script: |
+            DOCKER_IMAGE=$ZTIMERPROJECT_PARAMS_SCOPE/$ZTIMERPROJECT_PARAMS_TITLE
+            DOCKER_BUILD=$DOCKER_IMAGE:$ZTIMERPROJECT_PARAMS_TAG
+            echo Releasing $DOCKER_BUILD
+            NPMVERSION=$(npm dist-tag ls $ZTIMERPROJECT_PARAMS_NAME | grep $ZTIMERPROJECT_PARAMS_TAG)
+            docker pull $DOCKER_BUILD
+            SEMVAR=${NPMVERSION//rc:/}
+            DOCKER_BUILD_VERSION=$DOCKER_IMAGE:$(echo $SEMVAR)
+            DOCKER_BUILD_LATEST=$DOCKER_IMAGE:latest
+            echo Tagging $DOCKER_BUILD as $DOCKER_BUILD_LATEST
+            docker tag $DOCKER_BUILD $DOCKER_BUILD_LATEST
+            echo Tagging $DOCKER_BUILD as $DOCKER_BUILD_VERSION
+            docker tag $DOCKER_BUILD $DOCKER_BUILD_VERSION
+            echo Deploying $DOCKER_BUILD_VERSION
+            docker push $DOCKER_BUILD_VERSION
+            echo Deploying $DOCKER_BUILD_LATEST
+            docker push $DOCKER_BUILD_LATEST
