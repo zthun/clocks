@@ -5,7 +5,7 @@ jobs:
     flags: ztimer
     steps:
       - IN: ztimer-docker-cli-config
-      - IN: ztimer-global-parameters
+      - IN: ztimer-project
       - TASK:
         - script: |
             DOCKER_IMAGE=$ZTIMERPROJECT_PARAMS_SCOPE/$ZTIMERPROJECT_PARAMS_TITLE:$ZTIMERPROJECT_PARAMS_TAG
@@ -45,7 +45,7 @@ jobs:
     type: runCLI
     steps:
       - IN: ztimer-docker-cli-config
-      - IN: ztimer-global-parameters
+      - IN: ztimer-project
       # - IN: ztimer-deploy-prod
       - TASK:
         - script: |
