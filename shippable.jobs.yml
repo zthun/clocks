@@ -1,12 +1,19 @@
 jobs:
-  - name: ztimer-image
+  # Deploy the docker image to dockerhub
+  - name: ztimer-docker-image
     type: runCLI
+    flags: ztimer
     steps:
       - IN: ztimer-docker-cli-config
+      - IN: ztimer-global-parameters
       - TASK:
-        - script: npm install ztimer.ui@rc
-        - script: docker build node_modules/ztimer.ui -t zthun/ztimer:rc
-        - script: docker push zthun/ztimer:rc
+        - script: DOCKER_IMAGE=$PROJECT_SCOPE/$PROJECT_TITLE:$PROJECT_TAG
+        - script: Downloading $PROJECT_NAME from NPM.
+        - script: npm install $PROJECT_NAME@$PROJECT_TAG
+        - script: Building $DOCKER_IMAGE
+        - script: docker build node_modules/$PROJECT_NAME -t $DOCKER_IMAGE
+        - script: Deploying $DOCKER_IMAGE
+        - script: docker push $DOCKER_IMAGE
       - OUT: ztimer-rc-image
 
   - name: ztimer-manifest
@@ -21,7 +28,7 @@ jobs:
     type: deploy
     steps:
       - IN: ztimer-manifest
-      - IN: zthunworks-aws-stage-cluster
+      - IN: ztimer-aws-stage-cluster
       - TASK: managed
 
   - name: ztimer-deploy-prod
@@ -29,24 +36,29 @@ jobs:
     steps:
       - IN: ztimer-deploy-stage
         switch: off
-      - IN: zthunworks-aws-prod-cluster
+      - IN: ztimer-aws-prod-cluster
       - TASK: managed
 
   - name: ztimer-update-docker-image
     type: runCLI
     steps:
       - IN: ztimer-docker-cli-config
+      - IN: ztimer-global-parameters
       # - IN: ztimer-deploy-prod
       - TASK:
-        - script: SOURCE_IMAGE=zthun/ztimer
-        - script: SOURCE_TAG=rc
-        - script: NPMVERSION=$(npm dist-tag ls ztimer.ui | grep $SOURCE_TAG)
-        - script: docker pull zthun/ztimer:rc
+        - script: DOCKER_IMAGE=$PROJECT_SCOPE/$PROJECT_TITLE
+        - script: DOCKER_BUILD=$DOCKER_IMAGE:$PROJECT_TAG
+        - script: NPMVERSION=$(npm dist-tag ls $PROJECT_NAME | grep $PROJECT_TAG)
+        - script: docker pull $DOCKER_IMAGE
         - script: SEMVAR=${NPMVERSION//rc:/}
-        - script: SEMVAR=$(echo $SEMVAR) #remove any whitespace
-        - script: echo Tagging rc version as latest.
-        - script: docker tag $SOURCE_IMAGE:$SOURCE_TAG $SOURCE_IMAGE:latest
-        - script: echo Tagging rc version as $SEMVAR.
-        - script: docker tag $SOURCE_IMAGE:$SOURCE_TAG $SOURCE_IMAGE:$SEMVAR
-        # - script: docker push zthun:ztimer:$SEMVAR
-        # - script: docker push zthun:ztimer:latest
+        # The echo $SEMVAR trims the string of all whitespace.
+        - script: DOCKER_BUILD_VERSION=$DOCKER_IMAGE:$(echo $SEMVAR)
+        - script: DOCKER_BUILD_LATEST=$DOCKER_IMAGE:latest
+        - script: echo Tagging $DOCKER_BUILD as $DOCKER_BUILD_LATEST
+        - script: docker tag $DOCKER_BUILD $DOCKER_BUILD_LATEST
+        - script: echo Tagging $DOCKER_BUILD as $DOCKER_BUILD_VERSION
+        - script: docker tag $DOCKER_BUILD $DOCKER_BUILD_VERSION
+        - script: echo Deploying $DOCKER_BUILD_VERSION
+        # - script: docker push $DOCKER_BUILD_VERSION
+        - script: echo Deploying $DOCKER_BUILD_LATEST
+        # - script: docker push $DOCKER_BUILD_LATEST

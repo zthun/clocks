@@ -1,4 +1,15 @@
 resources:
+# Parameters
+  - name: ztimer-global-parameters
+    type: params
+    flags: "ztimer"
+    version:
+      params:
+        PROJECT_NAME: "ztimer.ui"
+        PROJECT_TITLE: "ztimer"
+        PROJECT_SCOPE: "zthun"
+        PROJECT_TAG: "rc"
+
 # CLI Configs
   - name: ztimer-docker-cli-config
     type: cliConfig
@@ -15,22 +26,23 @@ resources:
       versionName: rc
 
 # Docker Image Options
-  - name: core-docker-options
+  - name: ztimer-core-docker-options
     type: dockerOptions
     version:
       portMappings:
         - 80:80
       publishAllPorts : true
 
-# AWS cluster
-  - name: zthunworks-aws-stage-cluster
+# AWS Staging Cluster
+  - name: ztimer-aws-stage-cluster
     type: cluster
     integration: aws
     pointer:
       sourceName: "ztimer-stage"
       region: "us-west-2"
 
-  - name: zthunworks-aws-prod-cluster
+# AWS Production Cluster
+  - name: ztimer-aws-prod-cluster
     type: cluster
     integration: aws
     pointer:
