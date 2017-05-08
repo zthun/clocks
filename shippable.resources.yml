@@ -26,7 +26,7 @@ resources:
       versionName: rc
 
 # Docker Image Options
-  - name: ztimer-core-docker-options
+  - name: ztimer-docker-options
     type: dockerOptions
     version:
       portMappings:
