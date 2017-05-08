@@ -46,7 +46,7 @@ jobs:
     steps:
       - IN: ztimer-docker-cli-config
       - IN: ztimer-project
-      # - IN: ztimer-deploy-prod
+      - IN: ztimer-deploy-prod
       - TASK:
         - script: |
             DOCKER_IMAGE=$ZTIMERPROJECT_PARAMS_SCOPE/$ZTIMERPROJECT_PARAMS_TITLE
