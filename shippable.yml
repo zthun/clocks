@@ -30,6 +30,16 @@ build:
       - cp -r $TEST_RESULTS_FILE $TEST_RESULTS_DIR
 
 integrations:
+  notifications:
+    - integrationName: slack
+      type: slack
+      recipients:
+        - "#builds"
+        - "#ztimer"
+      on_success: always
+      on_failure: always
+      on_pull_request: never
+      on_start: always
   hub:
     - integrationName: dockerhub
       type: docker
