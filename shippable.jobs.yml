@@ -40,12 +40,12 @@ jobs:
       - TASK:
         - script: SOURCE_IMAGE=zthun/ztimer
         - script: SOURCE_TAG=rc
-        - script: NPMVERSION=$(npm dist-tag ls ztimer.ui | grep rc)
+        - script: NPMVERSION=$(npm dist-tag ls ztimer.ui | grep $SOURCE_TAG)
         - script: docker pull zthun/ztimer:rc
         - script: SEMVAR=${NPMVERSION//rc:/}
-        - script: echo Tagging rc version as $SEMVAR.
-        - script: docker tag $SOURCE_IMAGE:$SOURCE_TAG $SOURCE_IMAGE:$SEMVAR
         - script: echo Tagging rc version as latest.
         - script: docker tag $SOURCE_IMAGE:$SOURCE_TAG $SOURCE_IMAGE:latest
+        - script: echo Tagging rc version as $SEMVAR.
+        - script: docker tag $SOURCE_IMAGE:$SOURCE_TAG $SOURCE_IMAGE:$SEMVAR
         # - script: docker push zthun:ztimer:$SEMVAR
         # - script: docker push zthun:ztimer:latest
