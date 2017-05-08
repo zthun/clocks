@@ -8,11 +8,11 @@ jobs:
       - IN: ztimer-global-parameters
       - TASK:
         - script: DOCKER_IMAGE=$PROJECT_SCOPE/$PROJECT_TITLE:$PROJECT_TAG
-        - script: Downloading $PROJECT_NAME from NPM.
+        - script: echo Downloading $PROJECT_NAME from NPM.
         - script: npm install $PROJECT_NAME@$PROJECT_TAG
-        - script: Building $DOCKER_IMAGE
+        - script: echo Building $DOCKER_IMAGE
         - script: docker build node_modules/$PROJECT_NAME -t $DOCKER_IMAGE
-        - script: Deploying $DOCKER_IMAGE
+        - script: echo Deploying $DOCKER_IMAGE
         - script: docker push $DOCKER_IMAGE
       - OUT: ztimer-rc-image
 
