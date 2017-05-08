@@ -48,7 +48,7 @@ jobs:
       - TASK:
         - script: DOCKER_IMAGE=$PROJECT_SCOPE/$PROJECT_TITLE
         - script: DOCKER_BUILD=$DOCKER_IMAGE:$PROJECT_TAG
-        - script: Releasing $DOCKER_BUILD
+        - script: echo Releasing $DOCKER_BUILD
         - script: NPMVERSION=$(npm dist-tag ls $PROJECT_NAME | grep $PROJECT_TAG)
         - script: docker pull $DOCKER_IMAGE
         - script: SEMVAR=${NPMVERSION//rc:/}
