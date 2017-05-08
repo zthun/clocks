@@ -43,6 +43,7 @@ jobs:
         - script: NPMVERSION=$(npm dist-tag ls ztimer.ui | grep $SOURCE_TAG)
         - script: docker pull zthun/ztimer:rc
         - script: SEMVAR=${NPMVERSION//rc:/}
+        - script: SEMVAR=$(echo $SEMVAR) #remove any whitespace
         - script: echo Tagging rc version as latest.
         - script: docker tag $SOURCE_IMAGE:$SOURCE_TAG $SOURCE_IMAGE:latest
         - script: echo Tagging rc version as $SEMVAR.
