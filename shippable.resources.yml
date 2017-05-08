@@ -1,4 +1,4 @@
-resources: 
+resources:
 # CLI Configs
   - name: ztimer-docker-cli-config
     type: cliConfig
@@ -34,5 +34,5 @@ resources:
     type: cluster
     integration: aws
     pointer:
-      sourceName: "ztimer"
+      sourceName: "ztimer-prod"
       region: "us-west-2"

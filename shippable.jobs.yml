@@ -31,3 +31,17 @@ jobs:
         switch: off
       - IN: zthunworks-aws-prod-cluster
       - TASK: managed
+
+  - name: ztimer-update-docker-image
+    type: runCLI
+    steps:
+      - IN: ztimer-docker-cli-config
+      # - IN: ztimer-deploy-prod
+      - TASK:
+        - script: version=$(npm dist-tag ls ztimer.ui | grep rc)
+        - script: docker pull zthun/ztimer:rc
+        - script: semvar=${version//rc:/}
+        - script: docker tag zthun/ztimer:rc zthun/ztimer:$semvar
+        - script: docker tag zthun:ztimer:rc zthun/ztimer:latest
+        # - script: docker push zthun:ztimer:$semvar
+        # - script: docker push zthun:ztimer:latest
