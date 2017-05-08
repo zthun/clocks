@@ -23,6 +23,7 @@ jobs:
     steps:
       - IN: ztimer-rc-image
       - IN: ztimer-docker-options
+      - IN: ztimer-docker-image
       - TASK: managed
 
   - name: ztimer-deploy-stage
