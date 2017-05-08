@@ -21,7 +21,6 @@ jobs:
   - name: ztimer-manifest
     type: manifest
     steps:
-      - IN: ztimer-docker-image
       - IN: ztimer-rc-image
       - IN: ztimer-docker-options
       - TASK: managed
