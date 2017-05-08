@@ -3,6 +3,8 @@ jobs:
   - name: ztimer-docker-image
     type: runCLI
     flags: ztimer
+    always:
+      - NOTIFY: ztimer-slack-notifications
     steps:
       - IN: ztimer-docker-cli-config
       - IN: ztimer-project
@@ -20,6 +22,9 @@ jobs:
 
   - name: ztimer-manifest
     type: manifest
+    flags: ztimer
+    always:
+      - NOTIFY: ztimer-slack-notifications
     steps:
       - IN: ztimer-rc-image
       - IN: ztimer-docker-options
@@ -28,6 +33,9 @@ jobs:
 
   - name: ztimer-deploy-stage
     type: deploy
+    flags: ztimer
+    always:
+      - NOTIFY: ztimer-slack-notifications
     steps:
       - IN: ztimer-manifest
       - IN: ztimer-aws-stage-cluster
@@ -35,6 +43,9 @@ jobs:
 
   - name: ztimer-deploy-prod
     type: deploy
+    flags: ztimer
+    always:
+      - NOTIFY: ztimer-slack-notifications
     steps:
       - IN: ztimer-deploy-stage
         switch: off
@@ -43,6 +54,9 @@ jobs:
 
   - name: ztimer-update-docker-image
     type: runCLI
+    flags: ztimer
+    always:
+      - NOTIFY: ztimer-slack-notifications
     steps:
       - IN: ztimer-docker-cli-config
       - IN: ztimer-project

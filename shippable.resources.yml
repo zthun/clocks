@@ -10,14 +10,26 @@ resources:
         SCOPE: "zthun"
         TAG: "rc"
 
+# Notifications
+  - name: ztimer-slack-notifications
+    type: notification
+    flags: ztimer
+    integration: slack
+    pointer:
+      recipients:
+        - "#pipeline"
+        - "#ztimer"
+
 # CLI Configs
   - name: ztimer-docker-cli-config
     type: cliConfig
+    flags: ztimer
     integration: dockerhub
 
 # Docker Images
   - name: ztimer-rc-image
     type: image
+    flags: ztimer
     integration: dockerhub
     pointer:
       sourceName: "zthun/ztimer"
@@ -28,6 +40,7 @@ resources:
 # Docker Image Options
   - name: ztimer-docker-options
     type: dockerOptions
+    flags: ztimer
     version:
       portMappings:
         - 80:80
@@ -36,6 +49,7 @@ resources:
 # AWS Staging Cluster
   - name: ztimer-aws-stage-cluster
     type: cluster
+    flags: ztimer
     integration: aws
     pointer:
       sourceName: "ztimer-stage"
@@ -44,6 +58,7 @@ resources:
 # AWS Production Cluster
   - name: ztimer-aws-prod-cluster
     type: cluster
+    flags: ztimer
     integration: aws
     pointer:
       sourceName: "ztimer-prod"
