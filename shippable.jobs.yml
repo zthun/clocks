@@ -40,6 +40,7 @@ jobs:
       - IN: ztimer-manifest
       - IN: ztimer-aws-stage-cluster
       - TASK: managed
+        deployMethod: replace
 
   - name: ztimer-deploy-prod
     type: deploy
@@ -51,6 +52,7 @@ jobs:
         switch: off
       - IN: ztimer-aws-prod-cluster
       - TASK: managed
+        deployMethod: replace
 
   - name: ztimer-update-docker-image
     type: runCLI
