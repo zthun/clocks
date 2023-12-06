@@ -12,9 +12,6 @@ install-state.gz
 # Secrets
 .secrets
 
-# OS Turds
-.DS_Store
-
 # Logs
 logs
 *.log
