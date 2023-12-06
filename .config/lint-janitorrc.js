@@ -2,21 +2,21 @@ const generated = [
   '**/CHANGELOG.md',
   'packages/**/dist/**',
   'packages/**/docs/**',
+  'packages/**/stats/**',
   'node_modules/**',
   'packages/**/node_modules/**',
-  'packages/clocks-legacy/**',
   'package-lock.json',
   '.yarnrc.yml'
 ];
 const partialGenerated = ['cspell.json', 'lerna.json'];
 
-const esFiles = ['*.js', '*.ts', 'packages/**/src/**/*.ts'];
-const markdownFiles = ['*.md', 'packages/**/*.md'];
+const esFiles = ['*.js', '*.ts', 'packages/**/src/**/*.ts', 'packages/**/src/**/*.tsx'];
 const htmlFiles = ['packages/**/*.html'];
+const markdownFiles = ['*.md', 'packages/**/*.md'];
 const jsonFiles = ['*.json', 'packages/**/*.json'];
 const yamlFiles = ['.circleci/config.yml'];
-const prettyFiles = [].concat(esFiles).concat(markdownFiles).concat(jsonFiles).concat(yamlFiles);
-const spellingFiles = [].concat(esFiles).concat(markdownFiles).concat(jsonFiles).concat(yamlFiles);
+const prettyFiles = [].concat(esFiles).concat(htmlFiles).concat(markdownFiles).concat(jsonFiles).concat(yamlFiles);
+const spellingFiles = [].concat(esFiles).concat(htmlFiles).concat(markdownFiles).concat(jsonFiles).concat(yamlFiles);
 
 const esFilesExclude = generated;
 const htmlFilesExclude = generated;
@@ -29,10 +29,10 @@ const spellingFilesExclude = generated.concat(partialGenerated);
 module.exports = {
   esFiles,
   esFilesExclude,
-  markdownFiles,
-  markdownFilesExclude,
   htmlFiles,
   htmlFilesExclude,
+  markdownFiles,
+  markdownFilesExclude,
   jsonFiles,
   jsonFilesExclude,
   yamlFiles,
