@@ -9,27 +9,27 @@ module.exports = function (grunt) {
 
     var gruntConfig = {
         // Output paths
-        paths: require('./config/gruntfile-config').paths,
+        paths: require('./.config/gruntfile-config').paths,
 
         // Cleanup
-        clean: require('./config/gruntfile-clean'),
+        clean: require('./.config/gruntfile-clean'),
 
         // Checks
-        jshint: require('./config/gruntfile-jshint'),
-        bootlint: require('./config/gruntfile-bootlint'),
-        htmlhint: require('./config/gruntfile-htmlhint'),
-        sasslint: require('./config/gruntfile-sasslint'),
-        yamllint: require('./config/gruntfile-yamllint'),
-        karma: require('./config/gruntfile-karma'),
+        jshint: require('./.config/gruntfile-jshint'),
+        bootlint: require('./.config/gruntfile-bootlint'),
+        htmlhint: require('./.config/gruntfile-htmlhint'),
+        sasslint: require('./.config/gruntfile-sasslint'),
+        yamllint: require('./.config/gruntfile-yamllint'),
+        karma: require('./.config/gruntfile-karma'),
 
         // Build
-        ngtemplates: require('./config/gruntfile-ngtemplates'),
-        uglify: require('./config/gruntfile-uglify'),
-        sass: require('./config/gruntfile-sass'),
-        copy: require('./config/gruntfile-copy'),
+        ngtemplates: require('./.config/gruntfile-ngtemplates'),
+        uglify: require('./.config/gruntfile-uglify'),
+        sass: require('./.config/gruntfile-sass'),
+        copy: require('./.config/gruntfile-copy'),
 
         // Release
-        release: require('./config/gruntfile-release')
+        release: require('./.config/gruntfile-release')
     };
 
     gruntConfig.uglify.options.sourceMap = dbg;
