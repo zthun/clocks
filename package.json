@@ -1,7 +1,7 @@
 {
   "name": "@zthun/clocks",
   "version": "2.0.2",
-  "description": "A simple timer application written in javascript.",
+  "description": "Clocks, timers, and stopwatches.  Get to know your neighbors timezones.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -9,42 +9,11 @@
   },
   "keywords": [
     "timer",
-    "ztimer"
+    "clocks"
   ],
   "author": "Anthony Bonta",
   "devDependencies": {
-    "angular-mocks": "=1.6.4",
-    "grunt": "=1.0.1",
-    "grunt-angular-templates": "=1.1.0",
-    "grunt-bootlint": "=0.10.2",
-    "grunt-contrib-clean": "=1.1.0",
-    "grunt-contrib-copy": "=1.0.0",
-    "grunt-contrib-jshint": "=1.1.0",
-    "grunt-contrib-uglify": "=2.3.0",
-    "grunt-htmlhint": "=0.9.13",
-    "grunt-karma": "=2.0.0",
-    "grunt-release": "=0.14.0",
-    "grunt-sass": "=2.0.0",
-    "grunt-sass-lint": "=0.2.2",
-    "grunt-yamllint": "=0.3.0",
-    "jasmine-core": "=2.6.1",
-    "karma": "=1.7.0",
-    "karma-coverage": "=1.1.1",
-    "karma-jasmine": "=1.1.0",
-    "karma-jasmine-html-reporter": "=0.2.2",
-    "karma-junit-reporter": "=1.2.0",
-    "karma-phantomjs-launcher": "=1.0.4",
-    "load-grunt-tasks": "=3.5.2",
-    "phantomjs-prebuilt": "=2.1.14",
-    "zwebstyles": "=1.0.2"
   },
   "dependencies": {
-    "angular": "=1.6.4",
-    "angular-animate": "=1.6.4",
-    "animate-sass": "=0.6.6",
-    "bootstrap-sass": "=3.3.7",
-    "jquery": "=3.2.1",
-    "@uirouter/angularjs": "=1.0.3",
-    "zpubsub": "=2.0.2"
   }
 }
