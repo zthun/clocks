@@ -1,0 +1,25 @@
+{
+    "name": "@zthun/clocks-web",
+    "version": "1.0.0",
+    "description": "Clocks, calendars, timezones, oh my!",
+    "author": "Anthony Bonta",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/zthun/clocks",
+      "directory": "packages/clocks-web"
+    },
+    "main": "./dist/main.js",
+    "scripts": {
+        "start": "vite serve",
+      "build": "vite"
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "files": [
+      "dist"
+    ],
+    "sideEffects": false
+  }
+  
