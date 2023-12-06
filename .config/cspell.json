@@ -5,6 +5,8 @@
         "Bonta",
         "BUILDKIT",
         "buildx",
+        "commitlint",
+        "conventionalcommits",
         "DOCKERHUB",
         "zthun"
     ],
