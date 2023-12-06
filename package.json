@@ -1,19 +1,18 @@
 {
   "name": "@zthun/clocks",
-  "version": "2.0.2",
-  "description": "Clocks, timers, and stopwatches.  Get to know your neighbors timezones.",
+  "version": "0.0.0",
+  "description": "Clocks, timers, stopwatches, and calendars.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://bitbucket.org/zthun/ztimer.ui"
+    "url": "http://bitbucket.org/zthun/clocks"
   },
   "keywords": [
     "timer",
-    "clocks"
+    "stopwatch",
+    "timezone",
+    "utc",
+    "clock"
   ],
-  "author": "Anthony Bonta",
-  "devDependencies": {
-  },
-  "dependencies": {
-  }
+  "author": "Anthony Bonta"
 }
