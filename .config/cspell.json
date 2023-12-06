@@ -8,6 +8,7 @@
         "commitlint",
         "conventionalcommits",
         "DOCKERHUB",
+        "htmlhint",
         "zthun",
         "Zthunworks"
     ],
