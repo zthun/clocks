@@ -2,13 +2,16 @@
     "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json",
     "language": "en",
     "words": [
-      
+        "Bonta",
+        "BUILDKIT",
+        "buildx",
+        "DOCKERHUB",
+        "zthun"
     ],
     "dictionaries": [
-      "typescript",
-      "node",
-      "npm",
-      "en_US"
+        "typescript",
+        "node",
+        "npm",
+        "en_US"
     ]
-  }
-  
+}
