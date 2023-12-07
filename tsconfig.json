@@ -2,7 +2,9 @@
   "extends": "./.config/.tsconfig.json",
   "compilerOptions": {
     "baseUrl": "packages",
-    "target": "esnext"
+    "paths": {
+      "@zthun/clocks-chronos": ["clocks-chronos/src/index"]
+    }
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "**/*.mts", "**/*.tsx"]
 }
