@@ -1,21 +1,17 @@
 {
-    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json",
-    "language": "en",
-    "words": [
-        "Bonta",
-        "BUILDKIT",
-        "buildx",
-        "commitlint",
-        "conventionalcommits",
-        "DOCKERHUB",
-        "htmlhint",
-        "zthun",
-        "Zthunworks"
-    ],
-    "dictionaries": [
-        "typescript",
-        "node",
-        "npm",
-        "en_US"
-    ]
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json",
+  "language": "en",
+  "words": [
+    "Bonta",
+    "BUILDKIT",
+    "buildx",
+    "chronos",
+    "commitlint",
+    "conventionalcommits",
+    "DOCKERHUB",
+    "htmlhint",
+    "zthun",
+    "Zthunworks"
+  ],
+  "dictionaries": ["typescript", "node", "npm", "en_US"]
 }
