@@ -1,0 +1,43 @@
+{
+  "name": "@zthun/clocks-chronos",
+  "version": "1.0.0",
+  "description": "A basic functional package that includes methods for time manipulation",
+  "author": "Anthony Bonta",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zthun/clocks",
+    "directory": "packages/clocks-chronos"
+  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
+  "scripts": {
+    "build": "vite build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "vite": "^5.0.6",
+    "vite-plugin-dts": "^3.6.4",
+    "vite-plugin-externalize-deps": "^0.8.0",
+    "vite-tsconfig-paths": "^4.2.2",
+    "vitest": "^1.0.2"
+  },
+  "sideEffects": false
+}
