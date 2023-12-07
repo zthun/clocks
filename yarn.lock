@@ -2406,7 +2406,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4":
+"@types/lodash@npm:^4.14.202":
   version: 4.14.202
   resolution: "@types/lodash@npm:4.14.202"
   checksum: 6064d43c8f454170841bd67c8266cc9069d9e570a72ca63f06bceb484cb4a3ee60c9c1f305c1b9e3a87826049fd41124b8ef265c4dd08b00f6766609c7fe9973
@@ -2871,14 +2871,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zthun/clocks-chronos@workspace:packages/clocks-chronos"
   dependencies:
-    "@types/lodash": "npm:^4"
     date-fns: "npm:^2.30.0"
     date-fns-tz: "npm:^2.0.0"
     lodash: "npm:^4.17.21"
     vite: "npm:^5.0.6"
     vite-plugin-dts: "npm:^3.6.4"
     vite-plugin-externalize-deps: "npm:^0.8.0"
-    vite-tsconfig-paths: "npm:^4.2.1"
+    vite-tsconfig-paths: "npm:^4.2.2"
     vitest: "npm:^1.0.2"
   languageName: unknown
   linkType: soft
@@ -2899,7 +2898,7 @@ __metadata:
     react-router-dom: "npm:^6.20.1"
     rollup-plugin-visualizer: "npm:^5.10.0"
     vite: "npm:^5.0.6"
-    vite-tsconfig-paths: "npm:^4.2.1"
+    vite-tsconfig-paths: "npm:^4.2.2"
     vitest: "npm:^1.0.2"
   languageName: unknown
   linkType: soft
@@ -2910,6 +2909,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": "npm:^18.4.3"
     "@commitlint/config-conventional": "npm:^18.4.3"
+    "@types/lodash": "npm:^4.14.202"
     "@types/node": "npm:^20.10.4"
     "@types/react": "npm:^18.2.42"
     "@types/react-window": "npm:^1.8.8"
@@ -2921,7 +2921,7 @@ __metadata:
     lerna: "npm:^8.0.0"
     rimraf: "npm:^5.0.5"
     typescript: "npm:~5.3.3"
-    vite-tsconfig-paths: "npm:^4.2.1"
+    vite-tsconfig-paths: "npm:^4.2.2"
     vitest: "npm:^1.0.2"
   languageName: unknown
   linkType: soft
@@ -11753,9 +11753,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-tsconfig-paths@npm:^4.2.1":
-  version: 4.2.1
-  resolution: "vite-tsconfig-paths@npm:4.2.1"
+"vite-tsconfig-paths@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "vite-tsconfig-paths@npm:4.2.2"
   dependencies:
     debug: "npm:^4.1.1"
     globrex: "npm:^0.1.2"
@@ -11765,7 +11765,7 @@ __metadata:
   peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 982fb89b9e970fa69536688cecef020a7d0df3651364b88dba66297800b81cfbe397dec41b11f9afbd3a0559bf15964ee2b4caf9a308ebd3efc158fffdc401bf
+  checksum: 8f63d799b139cceeb2a65421f940f64dfe85be8b99e6e5e6ed1b348914ff1ede638c451568bb9ed5e6f14e27c4b66b2d6ed2b453a61357bd30e25ed1be062e2c
   languageName: node
   linkType: hard
 
