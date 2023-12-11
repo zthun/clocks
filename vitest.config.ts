@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [tsConfigPaths()],
   test: {
     testTimeout: 30000,
+    environment: 'jsdom',
     coverage: {
       provider: 'istanbul'
     }
