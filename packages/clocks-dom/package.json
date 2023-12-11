@@ -28,7 +28,9 @@
     "dist"
   ],
   "dependencies": {
-    "@zthun/clocks-fn": "^1.0.0"
+    "@zthun/cirque": "^5.0.0",
+    "@zthun/clocks-fn": "^1.0.0",
+    "@zthun/helpful-fn": "^3.0.0"
   },
   "devDependencies": {
     "typescript": "^5.3.3",
@@ -38,5 +40,5 @@
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.0.4"
   },
-  "sideEffects": false
+  "sideEffects": true
 }

@@ -30,11 +30,12 @@
   "dependencies": {
     "@zthun/clocks-dom": "^1.0.0",
     "@zthun/clocks-fn": "^1.0.0",
-    "@zthun/helpful-fn": "^3.0.0"
-  },
-  "devDependencies": {
     "@zthun/fashion-boutique": "^2.3.0",
     "@zthun/fashion-tailor": "^2.0.0",
+    "@zthun/helpful-fn": "^3.0.0",
+    "@zthun/helpful-query": "^3.0.0"
+  },
+  "devDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.3.3",
