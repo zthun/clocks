@@ -2,8 +2,9 @@
   "extends": "../../.config/.tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@zthun/clocks-fn": ["../clocks-fn/src/index.ts"]
+      "@zthun/clocks-fn": ["../clocks-fn/src/index"],
+      "@zthun/clocks-react": ["../clocks-react/src/index"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "../clocks-react/src/clock/clock.tsx"]
 }
