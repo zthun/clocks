@@ -1,4 +1,10 @@
 {
   "extends": "../../.config/.tsconfig.json",
-  "include": ["src/**/*.mts", "src/**/*.ts"]
+  "compilerOptions": {
+    "paths": {
+      "@zthun/clocks-fn": ["../clocks-fn/src/index"],
+      "@zthun/clocks-dom": ["../clocks-dom/src/index"]
+    }
+  },
+  "include": ["src/**/*.mts", "src/**/*.ts", "src/**/*.tsx"]
 }
