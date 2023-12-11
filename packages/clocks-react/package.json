@@ -29,7 +29,8 @@
   ],
   "dependencies": {
     "@zthun/clocks-dom": "^1.0.0",
-    "@zthun/clocks-fn": "^1.0.0"
+    "@zthun/clocks-fn": "^1.0.0",
+    "@zthun/helpful-fn": "^3.0.0"
   },
   "devDependencies": {
     "@zthun/fashion-boutique": "^2.3.0",

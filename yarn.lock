@@ -2908,6 +2908,7 @@ __metadata:
     "@zthun/clocks-fn": "npm:^1.0.0"
     "@zthun/fashion-boutique": "npm:^2.3.0"
     "@zthun/fashion-tailor": "npm:^2.0.0"
+    "@zthun/helpful-fn": "npm:^3.0.0"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     typescript: "npm:^5.3.3"
