@@ -2459,7 +2459,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.0":
+"@types/react-dom@npm:^18, @types/react-dom@npm:^18.0.0":
   version: 18.2.17
   resolution: "@types/react-dom@npm:18.2.17"
   dependencies:
@@ -2494,6 +2494,17 @@ __metadata:
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 2946d78c1f9a220a4dfedd7995b8bcba47235b19756bf3dd845c604bb24fff8d0ff5be81c0c98ac7f4488791e8c7e6cbcc4898c40c0209d74a1223b8fbfb994f
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18":
+  version: 18.2.43
+  resolution: "@types/react@npm:18.2.43"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    "@types/scheduler": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 10477a50fbd3c0cc5b8a2ade679f442717f68fb27c8460b2aa1d3256cd18c48f742bbe5b9ee37a8c4c5f832ffa37b3a23c09fd96dd880a8e3182d8929c05e803
   languageName: node
   linkType: hard
 
@@ -2860,17 +2871,56 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@zthun/clocks-dom@npm:^1.0.0, @zthun/clocks-dom@workspace:packages/clocks-dom":
+  version: 0.0.0-use.local
+  resolution: "@zthun/clocks-dom@workspace:packages/clocks-dom"
+  dependencies:
+    "@zthun/clocks-fn": "npm:^1.0.0"
+    typescript: "npm:^5.3.3"
+    vite: "npm:^5.0.6"
+    vite-plugin-dts: "npm:^3.6.4"
+    vite-plugin-externalize-deps: "npm:^0.8.0"
+    vite-tsconfig-paths: "npm:^4.2.2"
+    vitest: "npm:^1.0.2"
+  languageName: unknown
+  linkType: soft
+
 "@zthun/clocks-fn@npm:^1.0.0, @zthun/clocks-fn@workspace:packages/clocks-fn":
   version: 0.0.0-use.local
   resolution: "@zthun/clocks-fn@workspace:packages/clocks-fn"
   dependencies:
     date-fns: "npm:^2.30.0"
     date-fns-tz: "npm:^2.0.0"
+    typescript: "npm:^5.3.3"
     vite: "npm:^5.0.6"
     vite-plugin-dts: "npm:^3.6.4"
     vite-plugin-externalize-deps: "npm:^0.8.0"
     vite-tsconfig-paths: "npm:^4.2.2"
     vitest: "npm:^1.0.2"
+  languageName: unknown
+  linkType: soft
+
+"@zthun/clocks-react@workspace:packages/clocks-react":
+  version: 0.0.0-use.local
+  resolution: "@zthun/clocks-react@workspace:packages/clocks-react"
+  dependencies:
+    "@types/react": "npm:^18"
+    "@types/react-dom": "npm:^18"
+    "@zthun/clocks-dom": "npm:^1.0.0"
+    "@zthun/clocks-fn": "npm:^1.0.0"
+    "@zthun/fashion-boutique": "npm:^2.3.0"
+    "@zthun/fashion-tailor": "npm:^2.0.0"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    typescript: "npm:^5.3.3"
+    vite: "npm:^5.0.6"
+    vite-plugin-dts: "npm:^3.6.4"
+    vite-plugin-externalize-deps: "npm:^0.8.0"
+    vite-tsconfig-paths: "npm:^4.2.2"
+    vitest: "npm:^1.0.2"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -11447,7 +11497,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:>=3 < 6, typescript@npm:~5.3.3":
+"typescript@npm:>=3 < 6, typescript@npm:^5.3.3, typescript@npm:~5.3.3":
   version: 5.3.3
   resolution: "typescript@npm:5.3.3"
   bin:
@@ -11467,7 +11517,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A~5.3.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.3.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A~5.3.3#optional!builtin<compat/typescript>":
   version: 5.3.3
   resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
   bin:
