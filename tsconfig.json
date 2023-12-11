@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "packages",
     "paths": {
-      "@zthun/clocks-chronos": ["clocks-chronos/src/index"]
+      "@zthun/clocks-fn": ["clocks-fn/src/index"]
     }
   },
   "include": ["**/*.ts", "**/*.mts", "**/*.tsx"]

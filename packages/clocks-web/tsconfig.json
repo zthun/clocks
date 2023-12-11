@@ -2,7 +2,7 @@
   "extends": "../../.config/.tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@zthun/clocks-chronos": ["../clocks-chronos/src/index.ts"]
+      "@zthun/clocks-fn": ["../clocks-fn/src/index.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]

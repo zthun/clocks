@@ -24,7 +24,7 @@
     "@zthun/cirque": "^5.0.0",
     "@zthun/cirque-du-react": "^5.0.0",
     "@zthun/cirque-du-selenium": "^5.0.0",
-    "@zthun/clocks-chronos": "^1.0.0",
+    "@zthun/clocks-fn": "^1.0.0",
     "@zthun/fashion-boutique": "^2.3.0",
     "@zthun/fashion-tailor": "^2.0.0",
     "@zthun/fashion-theme": "^2.0.0",
