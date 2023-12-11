@@ -32,8 +32,6 @@
     "@zthun/clocks-fn": "^1.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
     "@zthun/fashion-boutique": "^2.3.0",
     "@zthun/fashion-tailor": "^2.0.0",
     "react": "^18.2.0",

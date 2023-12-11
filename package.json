@@ -30,7 +30,7 @@
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
     "@types/node": "^20.10.4",
-    "@types/react": "^18.2.42",
+    "@types/react": "^18.2.43",
     "@types/react-window": "^1.8.8",
     "@vitest/coverage-istanbul": "^1.0.4",
     "@zthun/lint-janitor": "^15.1.1",
