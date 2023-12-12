@@ -1,3 +1,5 @@
+import { firstDefined } from '@zthun/helpful-fn';
+
 export interface IZClockOptions {
   format?: string | null;
   culture?: string | null;
@@ -11,7 +13,7 @@ export interface IZClockElement {
 
 export abstract class ZClockElement extends HTMLElement implements IZClockElement, IZClockOptions {
   public static get observedAttributes() {
-    return ['value', 'format', 'culture', 'timeZone'];
+    return ['value', 'format', 'culture', 'timeZone', 'name'];
   }
 
   public constructor(public readonly kind: string) {
@@ -66,6 +68,7 @@ export abstract class ZClockElement extends HTMLElement implements IZClockElemen
 
   public attributeChangedCallback() {
     this.childNodes.forEach((ch) => this.removeChild(ch));
+    this.setAttribute('data-name', firstDefined('', this.name));
     this.render(this);
   }
 
