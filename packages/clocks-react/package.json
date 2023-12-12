@@ -28,6 +28,7 @@
     "dist"
   ],
   "dependencies": {
+    "@zthun/cirque": "^5.0.0",
     "@zthun/clocks-dom": "^1.0.0",
     "@zthun/clocks-fn": "^1.0.0",
     "@zthun/fashion-boutique": "^2.3.0",
@@ -36,6 +37,7 @@
     "@zthun/helpful-query": "^3.0.0"
   },
   "devDependencies": {
+    "@zthun/cirque-du-react": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.3.3",
