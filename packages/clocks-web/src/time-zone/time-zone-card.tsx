@@ -1,5 +1,5 @@
 import { formatDateTime } from '@zthun/clocks-fn';
-import { ZClockDigital, useDate } from '@zthun/clocks-react';
+import { ZClockAnalog, ZClockDigital, useDate } from '@zthun/clocks-react';
 import {
   IZComponentHeading,
   IZComponentName,
@@ -38,7 +38,8 @@ export function ZTimeZoneCard(props: IZTimezoneCard) {
       widthSm={widthSm}
       widthXs={widthXs}
     >
-      <ZClockDigital value={current} timeZone={value} format='HH:mm:ss' name={name} />
+      <ZClockAnalog value={current} timeZone={value} name='analog' />
+      <ZClockDigital value={current} timeZone={value} format='HH:mm:ss' name='digital' />
     </ZCard>
   );
 }

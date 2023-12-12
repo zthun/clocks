@@ -37,7 +37,7 @@ describe('TimeZones Page', () => {
     const target = await createTestTarget();
     const card = await cardFn(target);
     // Act.
-    const clock = await card.clock();
+    const clock = await card.digital();
     const actual = await attributeFn(clock);
     // Assert.
     expect(actual).toEqual(expected);
@@ -54,7 +54,7 @@ describe('TimeZones Page', () => {
     const card = await cardFn(target);
     const tz = userTimeZone();
     // Act.
-    const clock = await card.clock();
+    const clock = await card.digital();
     const value = await clock.value();
     const expected = new Date().getTime();
     const actual = guessDateTime(value, { timeZone: tz, format: 'HH:mm:ss' })?.getTime();
@@ -66,7 +66,7 @@ describe('TimeZones Page', () => {
   describe('User time zone', () => {
     const factory = (t: ZTimeZonePageComponentModel) => t.user();
 
-    it('should render name', () => shouldRenderName(ZTimeZonePageComponentModel.TimeZoneUser, factory));
+    it('should render name', () => shouldRenderName(ZTimeZoneCardComponentModel.NameDigital, factory));
     it('should have time zone', () => shouldRenderTimeZone(userTimeZone(), factory));
     it('should render culture', () => shouldRenderCulture(null, factory));
     it('should render format', () => shouldRenderFormat('HH:mm:ss', factory));
@@ -76,7 +76,7 @@ describe('TimeZones Page', () => {
   describe('UTC', () => {
     const factory = (t: ZTimeZonePageComponentModel) => t.utc();
 
-    it('should render name', () => shouldRenderName(ZTimeZonePageComponentModel.TimeZoneUtc, factory));
+    it('should render name', () => shouldRenderName(ZTimeZoneCardComponentModel.NameDigital, factory));
     it('should have time zone', () => shouldRenderTimeZone('UTC', factory));
     it('should render culture', () => shouldRenderCulture(null, factory));
     it('should render format', () => shouldRenderFormat('HH:mm:ss', factory));
