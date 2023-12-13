@@ -6,8 +6,8 @@ export class ZClockAnalogElement extends ZClockElement {
   public static readonly Size = 100;
   public static readonly TickHeight = 8;
   public static readonly TickWidth = 2;
-  public static readonly MinuteSecondHeight = 32;
-  public static readonly HourHeight = 24;
+  public static readonly MinuteSecondHeight = 34;
+  public static readonly HourHeight = 18;
   public static readonly FaceColor = '#000000';
   public static readonly OutlineColor = '#ffffff';
   public static readonly SecondColor = '#ffff00';
@@ -20,16 +20,15 @@ export class ZClockAnalogElement extends ZClockElement {
     return document.createElementNS('http://www.w3.org/2000/svg', name);
   }
 
-  private createHand(length: number, color: string) {
-    const w = ZClockAnalogElement.TickWidth;
+  private createHand(width: number, height: number, color: string) {
     const c = ZClockAnalogElement.Size / 2;
-    const [x, y] = [c - w / 2, c - length];
+    const [x, y] = [c - width / 2, c - height];
 
     const hand = this.createSvgElement('rect');
     hand.setAttribute('x', `${x}`);
     hand.setAttribute('y', `${y}`);
-    hand.setAttribute('width', `${w}`);
-    hand.setAttribute('height', `${length}`);
+    hand.setAttribute('width', `${width}`);
+    hand.setAttribute('height', `${height}`);
     hand.setAttribute('fill', color);
     hand.style.transformOrigin = 'center';
 
@@ -37,21 +36,33 @@ export class ZClockAnalogElement extends ZClockElement {
   }
 
   private createClockSecondHand(second: number) {
-    const hand = this.createHand(ZClockAnalogElement.MinuteSecondHeight, ZClockAnalogElement.SecondColor);
+    const hand = this.createHand(
+      ZClockAnalogElement.TickWidth / 2,
+      ZClockAnalogElement.MinuteSecondHeight * 1.2,
+      ZClockAnalogElement.SecondColor
+    );
     hand.setAttribute('name', 'hand-second');
     hand.style.transform = `rotate(${second * 6}deg)`;
     return hand;
   }
 
   private createClockMinuteHand(minute: number) {
-    const hand = this.createHand(ZClockAnalogElement.MinuteSecondHeight, ZClockAnalogElement.OutlineColor);
+    const hand = this.createHand(
+      ZClockAnalogElement.TickWidth,
+      ZClockAnalogElement.MinuteSecondHeight,
+      ZClockAnalogElement.OutlineColor
+    );
     hand.setAttribute('name', 'hand-minute');
     hand.style.transform = `rotate(${minute * 6}deg)`;
     return hand;
   }
 
   private createClockHourHand(hour: number, minute: number) {
-    const hand = this.createHand(ZClockAnalogElement.HourHeight, ZClockAnalogElement.OutlineColor);
+    const hand = this.createHand(
+      ZClockAnalogElement.TickWidth,
+      ZClockAnalogElement.HourHeight,
+      ZClockAnalogElement.OutlineColor
+    );
     hand.setAttribute('name', 'hand-hour');
     const r = hour * 30 + 0.5 * minute;
     hand.style.transform = `rotate(${r}deg)`;
