@@ -6,8 +6,8 @@ export class ZClockAnalogElement extends ZClockElement {
   public static readonly Size = 100;
   public static readonly TickHeight = 8;
   public static readonly TickWidth = 2;
-  public static readonly MinuteSecondHeight = 34;
-  public static readonly HourHeight = 18;
+  public static readonly MinuteSecondHeight = 30;
+  public static readonly HourHeight = 22;
   public static readonly FaceColor = '#000000';
   public static readonly OutlineColor = '#ffffff';
   public static readonly SecondColor = '#ffff00';
@@ -90,6 +90,17 @@ export class ZClockAnalogElement extends ZClockElement {
     return tick;
   }
 
+  private createCenterGear() {
+    const c = ZClockAnalogElement.Size / 2;
+    const r = ZClockAnalogElement.Size / 20;
+    const gear = this.createSvgElement('circle');
+    gear.setAttribute('r', `${r - 2}`);
+    gear.setAttribute('cx', `${c}`);
+    gear.setAttribute('cy', `${c}`);
+    gear.setAttribute('fill', ZClockAnalogElement.OutlineColor);
+    return gear;
+  }
+
   private createClockFace() {
     const r = ZClockAnalogElement.Size / 2;
     const face = this.createSvgElement('circle');
@@ -126,6 +137,7 @@ export class ZClockAnalogElement extends ZClockElement {
     svg.appendChild(this.createClockHourHand(+hour, +minute));
     svg.appendChild(this.createClockMinuteHand(+minute));
     svg.appendChild(this.createClockSecondHand(+second));
+    svg.appendChild(this.createCenterGear());
 
     return svg;
   }
