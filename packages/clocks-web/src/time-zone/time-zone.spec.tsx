@@ -42,7 +42,6 @@ describe('TimeZones Page', () => {
   };
 
   const shouldRenderTimeZone = shouldRenderAttribute.bind(null, (c) => c.timeZone());
-  const shouldRenderCulture = shouldRenderAttribute.bind(null, (c) => c.culture());
 
   const shouldRenderTheTime = async (tolerance: number, clockFn: ClockFactory) => {
     // Arrange.
@@ -52,7 +51,7 @@ describe('TimeZones Page', () => {
     const clock = await clockFn(target);
     const value = await clock.value();
     const expected = new Date().getTime();
-    const actual = guessDateTime(value, { timeZone: tz, format: 'HH:mm:ss' })?.getTime();
+    const actual = guessDateTime(value, { timeZone: tz })?.getTime();
     // Assert.
     expect(actual).toBeGreaterThanOrEqual(expected - tolerance);
     expect(actual).toBeLessThanOrEqual(expected + tolerance);
