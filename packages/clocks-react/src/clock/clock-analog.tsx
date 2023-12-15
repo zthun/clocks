@@ -13,7 +13,7 @@ declare global {
 }
 
 export function ZClockAnalog(props: IZClock) {
-  const { className, value, timeZone, format, culture, name } = props;
+  const { className, value, timeZone, name } = props;
   const date = useMemo(() => formatDateTime(value, { format: ZDateFormats.Iso, timeZone: 'UTC' }), [value]);
 
   return (
@@ -23,8 +23,6 @@ export function ZClockAnalog(props: IZClock) {
       value={date}
       name={name}
       timeZone={timeZone}
-      format={format}
-      culture={culture}
       data-name='sample'
     />
   );

@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
  * Uses the current date updated at every interval.
  *
  * @param interval -
- *        The interval to update.  The default is every 45 seconds.
+ *        The interval to update.  The default is every second.
  *
  * @returns
  *        The current date.
  */
-export function useDate(interval = 45000) {
+export function useDate(interval = 1000) {
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {

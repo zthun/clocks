@@ -1,16 +1,10 @@
 import { ZCircusBy, ZCircusComponentModel } from '@zthun/cirque';
-import { ZTimeZoneCardComponentModel } from './time-zone-card.cm';
+import { ZClockComponentModel } from '@zthun/clocks-dom';
 
 export class ZTimeZonePageComponentModel extends ZCircusComponentModel {
-  public static readonly TimeZoneUser = 'user';
-  public static readonly TimeZoneUtc = 'utc';
   public static readonly Selector = '.ZTimeZonePage-root';
 
-  public user(): Promise<ZTimeZoneCardComponentModel> {
-    return ZCircusBy.first(this.driver, ZTimeZoneCardComponentModel, ZTimeZonePageComponentModel.TimeZoneUser);
-  }
-
-  public utc(): Promise<ZTimeZoneCardComponentModel> {
-    return ZCircusBy.first(this.driver, ZTimeZoneCardComponentModel, ZTimeZonePageComponentModel.TimeZoneUtc);
+  public analog(): Promise<ZClockComponentModel> {
+    return ZCircusBy.first(this.driver, ZClockComponentModel, 'analog');
   }
 }

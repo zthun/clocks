@@ -1,8 +1,6 @@
 import { firstDefined } from '@zthun/helpful-fn';
 
 export interface IZClockOptions {
-  format?: string | null;
-  culture?: string | null;
   timeZone?: string | null;
 }
 
@@ -34,22 +32,6 @@ export abstract class ZClockElement extends HTMLElement implements IZClockElemen
 
   public set name(value: string) {
     this.setAttribute('name', value);
-  }
-
-  public get format(): string | null {
-    return this.getAttribute('format');
-  }
-
-  public set format(value: string) {
-    this.setAttribute('format', value);
-  }
-
-  public get culture(): string | null {
-    return this.getAttribute('culture');
-  }
-
-  public set culture(value: string) {
-    this.setAttribute('culture', value);
   }
 
   public get timeZone(): string | null {
