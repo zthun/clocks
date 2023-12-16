@@ -28,13 +28,13 @@
     "dist"
   ],
   "dependencies": {
-    "@zthun/cirque": "^5.0.0",
+    "@zthun/cirque": "^5.0.1",
     "@zthun/clocks-fn": "^1.0.0",
     "@zthun/helpful-fn": "^3.0.0"
   },
   "devDependencies": {
     "typescript": "^5.3.3",
-    "vite": "^5.0.8",
+    "vite": "^5.0.10",
     "vite-plugin-dts": "^3.6.4",
     "vite-plugin-externalize-deps": "^0.8.0",
     "vite-tsconfig-paths": "^4.2.2",

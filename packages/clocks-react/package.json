@@ -28,20 +28,20 @@
     "dist"
   ],
   "dependencies": {
-    "@zthun/cirque": "^5.0.0",
+    "@zthun/cirque": "^5.0.1",
     "@zthun/clocks-dom": "^1.0.0",
     "@zthun/clocks-fn": "^1.0.0",
-    "@zthun/fashion-boutique": "^2.3.0",
-    "@zthun/fashion-tailor": "^2.0.0",
+    "@zthun/fashion-boutique": "^2.4.2",
+    "@zthun/fashion-tailor": "^2.4.2",
     "@zthun/helpful-fn": "^3.0.0",
     "@zthun/helpful-query": "^3.0.0"
   },
   "devDependencies": {
-    "@zthun/cirque-du-react": "^5.0.0",
+    "@zthun/cirque-du-react": "^5.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.3.3",
-    "vite": "^5.0.8",
+    "vite": "^5.0.10",
     "vite-plugin-dts": "^3.6.4",
     "vite-plugin-externalize-deps": "^0.8.0",
     "vite-tsconfig-paths": "^4.2.2",
