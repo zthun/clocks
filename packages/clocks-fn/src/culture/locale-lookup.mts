@@ -1,5 +1,5 @@
 import * as locale from 'date-fns/locale';
-import keyBy from 'lodash/keyBy';
+import { keyBy } from 'lodash-es';
 
 /**
  * Lookup codes for date-fns locales.
