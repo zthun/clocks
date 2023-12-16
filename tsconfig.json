@@ -3,7 +3,9 @@
   "compilerOptions": {
     "baseUrl": "packages",
     "paths": {
-      "@zthun/clocks-fn": ["clocks-fn/src/index"]
+      "@zthun/clocks-fn": ["clocks-fn/src/index"],
+      "@zthun/clock-dom": ["clocks-dom/src/index"],
+      "@zthun/clocks-react": ["clocks-react/src/index"]
     }
   },
   "include": ["**/*.ts", "**/*.mts", "**/*.tsx"]
