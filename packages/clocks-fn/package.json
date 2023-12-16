@@ -1,6 +1,6 @@
 {
   "name": "@zthun/clocks-fn",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A basic functional package that includes methods for time manipulation",
   "author": "Anthony Bonta",
   "license": "MIT",
