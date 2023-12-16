@@ -25,10 +25,10 @@ describe('Format', () => {
   it('should format to the specified culture', () => {
     // Arrange.
     const culture = 'en-GB';
-    const stamp = '2023-12-07T12:52:00.000Z';
-    const expected = '07/12/2023, 06:52';
+    const stamp = '2023-12-07T13:52:00.000Z';
+    const expected = '07/12/2023, 13:52';
     // Act.
-    const actual = formatDateTime(stamp, { culture });
+    const actual = formatDateTime(stamp, { culture, timeZone: 'UTC' });
     // Assert.
     expect(actual).toEqual(expected);
   });
