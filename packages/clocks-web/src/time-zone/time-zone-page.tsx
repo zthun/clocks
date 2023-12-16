@@ -1,8 +1,8 @@
 import { ZDateFormats, culture, cultures, formatDateTime, timeZones, userTimeZone } from '@zthun/clocks-fn';
 import { ZClockAnalog, useDate } from '@zthun/clocks-react';
-import { ZBox, ZCard, ZChoiceAutocomplete, ZH2, ZStack } from '@zthun/fashion-boutique';
-import { ZSizeFixed } from '@zthun/fashion-tailor';
-import { ZOrientation, setFirst } from '@zthun/helpful-fn';
+import { ZBox, ZCard, ZChoiceAutocomplete, ZH2, ZH3, ZStack } from '@zthun/fashion-boutique';
+import { ZSizeFixed, ZSizeVaried } from '@zthun/fashion-tailor';
+import { ZHorizontalAnchor, ZOrientation, setFirst } from '@zthun/helpful-fn';
 import { identity } from 'lodash-es';
 import React, { useMemo, useState } from 'react';
 
@@ -26,14 +26,16 @@ export function ZTimeZonePage() {
 
   return (
     <ZCard className='ZTimeZonePage-root' heading={timeZone} subHeading={subHeading}>
-      <ZStack orientation={ZOrientation.Vertical} gap={ZSizeFixed.Medium}>
-        <ZBox width={ZSizeFixed.ExtraSmall}>
-          <ZClockAnalog value={current} timeZone={timeZone} name='analog' />
-        </ZBox>
+      <ZStack orientation={ZOrientation.Vertical} gap={ZSizeFixed.Medium} justifyContent='center'>
+        <ZBox width={ZSizeVaried.Full} justification={ZHorizontalAnchor.Center}>
+          <ZBox width={ZSizeFixed.ExtraSmall} margin={{ x: ZSizeVaried.Fit, bottom: ZSizeFixed.Large }}>
+            <ZClockAnalog value={current} timeZone={timeZone} name='analog' />
+          </ZBox>
 
-        <ZH2 className='ZTimeZonePage-value' compact>
-          {formatted}
-        </ZH2>
+          <ZH3 className='ZTimeZonePage-value' compact>
+            {formatted}
+          </ZH3>
+        </ZBox>
 
         <ZH2 compact>Options</ZH2>
 
