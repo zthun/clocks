@@ -13,8 +13,8 @@ describe('Format', () => {
   it('should format to the given timezone', () => {
     // Arrange.
     const timeZone = 'America/Chicago';
-    const stamp = '2023-12-07T01:38:00.000';
-    const expected = '2023-12-07T01:38:00.000-0600';
+    const stamp = '2023-12-07T01:38:00.000Z';
+    const expected = '2023-12-06T19:38:00.000-0600';
     const fmt = ZDateFormats.Iso;
     // Act.
     const actual = formatDateTime(stamp, { format: fmt, culture: 'en-US', timeZone });
