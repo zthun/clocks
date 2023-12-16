@@ -82,7 +82,8 @@ describe('TimeZones Page', () => {
       // Arrange
       const target = await createTestTarget();
       const culture = 'en-GB';
-      const expected = formatDateTime(new Date(), { culture });
+      const format = ZDateFormats.IsoDateOnly;
+      const expected = formatDateTime(new Date(), { culture, format });
       // Act.
       const choice = await target.culture();
       await choice.select(culture);
@@ -95,7 +96,8 @@ describe('TimeZones Page', () => {
       // Arrange
       const target = await createTestTarget();
       const timeZone = userTimeZone();
-      const expected = formatDateTime(new Date(), { timeZone });
+      const format = ZDateFormats.IsoDateOnly;
+      const expected = formatDateTime(new Date(), { timeZone, format });
       // Act.
       const choice = await target.timeZone();
       await choice.select(timeZone);
