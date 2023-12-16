@@ -65,42 +65,20 @@ describe('TimeZones Page', () => {
   });
 
   describe('Value', () => {
-    it('should format to the selected format', async () => {
+    it('should format to the selected configuration', async () => {
       // Arrange
       const target = await createTestTarget();
       const format = ZDateFormats.IsoDateOnly;
-      const expected = formatDateTime(new Date(), { format });
-      // Act.
-      const choice = await target.format();
-      await choice.select(format);
-      const actual = await target.value();
-      // Assert.
-      expect(actual).toEqual(expected);
-    });
-
-    it('should format to the selected culture', async () => {
-      // Arrange
-      const target = await createTestTarget();
       const culture = 'en-GB';
-      const format = ZDateFormats.IsoDateOnly;
-      const expected = formatDateTime(new Date(), { culture, format });
-      // Act.
-      const choice = await target.culture();
-      await choice.select(culture);
-      const actual = await target.value();
-      // Assert.
-      expect(actual).toEqual(expected);
-    });
-
-    it('should format to the selected timeZone', async () => {
-      // Arrange
-      const target = await createTestTarget();
       const timeZone = userTimeZone();
-      const format = ZDateFormats.IsoDateOnly;
-      const expected = formatDateTime(new Date(), { timeZone, format });
+      const _format = await target.format();
+      const _culture = await target.culture();
+      const _timeZone = await target.timeZone();
+      const expected = formatDateTime(new Date(), { format, culture, timeZone });
       // Act.
-      const choice = await target.timeZone();
-      await choice.select(timeZone);
+      await _format.select(format);
+      await _culture.select(culture);
+      await _timeZone.select(timeZone);
       const actual = await target.value();
       // Assert.
       expect(actual).toEqual(expected);
