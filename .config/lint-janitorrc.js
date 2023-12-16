@@ -15,7 +15,7 @@ const htmlFiles = ['packages/**/*.html'];
 const markdownFiles = ['*.md', 'packages/**/*.md'];
 const jsonFiles = ['*.json', 'packages/**/*.json'];
 const yamlFiles = ['.circleci/config.yml'];
-// const prettyFiles = [].concat(esFiles).concat(htmlFiles).concat(markdownFiles).concat(jsonFiles).concat(yamlFiles);
+const prettyFiles = [].concat(esFiles).concat(htmlFiles).concat(markdownFiles).concat(jsonFiles).concat(yamlFiles);
 const spellingFiles = [].concat(esFiles).concat(htmlFiles).concat(markdownFiles).concat(jsonFiles).concat(yamlFiles);
 
 const esFilesExclude = generated;
@@ -23,7 +23,7 @@ const htmlFilesExclude = generated;
 const markdownFilesExclude = generated;
 const jsonFilesExclude = generated;
 const yamlFilesExclude = generated;
-// const prettyFilesExclude = generated.concat(partialGenerated);
+const prettyFilesExclude = generated.concat(partialGenerated);
 const spellingFilesExclude = generated.concat(partialGenerated);
 
 module.exports = {
@@ -37,8 +37,8 @@ module.exports = {
   jsonFilesExclude,
   yamlFiles,
   yamlFilesExclude,
-  // prettyFiles,
-  // prettyFilesExclude,
+  prettyFiles,
+  prettyFilesExclude,
   spellingFiles,
   spellingFilesExclude
 };
