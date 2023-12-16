@@ -1,7 +1,7 @@
 import { IZCircusDriver, IZCircusSetup, ZCircusBy } from '@zthun/cirque';
 import { ZCircusSetupRenderer } from '@zthun/cirque-du-react';
 import { ZClockComponentModel } from '@zthun/clocks-dom';
-import { guessDateTime, userTimeZone } from '@zthun/clocks-fn';
+import { ZDateFormats, formatDateTime, guessDateTime, userTimeZone } from '@zthun/clocks-fn';
 import React from 'react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { ZTimeZonePage } from './time-zone-page';
@@ -24,43 +24,84 @@ describe('TimeZones Page', () => {
     await _driver?.destroy?.call(_driver);
   });
 
-  type AttributeFactory = (c: ZClockComponentModel) => Promise<string | null>;
-  type ClockFactory = (t: ZTimeZonePageComponentModel) => Promise<ZClockComponentModel>;
+  describe('Clock', () => {
+    type AttributeFactory = (c: ZClockComponentModel) => Promise<string | null>;
+    type ClockFactory = (t: ZTimeZonePageComponentModel) => Promise<ZClockComponentModel>;
 
-  const shouldRenderAttribute = async (
-    attributeFn: AttributeFactory,
-    expected: string | null,
-    clockFn: ClockFactory
-  ) => {
-    // Arrange.
-    const target = await createTestTarget();
-    const clock = await clockFn(target);
-    // Act.
-    const actual = await attributeFn(clock);
-    // Assert.
-    expect(actual).toEqual(expected);
-  };
+    const shouldRenderAttribute = async (
+      attributeFn: AttributeFactory,
+      expected: string | null,
+      clockFn: ClockFactory
+    ) => {
+      // Arrange.
+      const target = await createTestTarget();
+      const clock = await clockFn(target);
+      // Act.
+      const actual = await attributeFn(clock);
+      // Assert.
+      expect(actual).toEqual(expected);
+    };
 
-  const shouldRenderTimeZone = shouldRenderAttribute.bind(null, (c) => c.timeZone());
+    const shouldRenderTimeZone = shouldRenderAttribute.bind(null, (c) => c.timeZone());
 
-  const shouldRenderTheTime = async (tolerance: number, clockFn: ClockFactory) => {
-    // Arrange.
-    const target = await createTestTarget();
-    const tz = userTimeZone();
-    // Act.
-    const clock = await clockFn(target);
-    const value = await clock.value();
-    const expected = new Date().getTime();
-    const actual = guessDateTime(value, { timeZone: tz })?.getTime();
-    // Assert.
-    expect(actual).toBeGreaterThanOrEqual(expected - tolerance);
-    expect(actual).toBeLessThanOrEqual(expected + tolerance);
-  };
+    const shouldRenderTheTime = async (tolerance: number, clockFn: ClockFactory) => {
+      // Arrange.
+      const target = await createTestTarget();
+      const tz = userTimeZone();
+      // Act.
+      const clock = await clockFn(target);
+      const value = await clock.value();
+      const expected = new Date().getTime();
+      const actual = guessDateTime(value, { timeZone: tz })?.getTime();
+      // Assert.
+      expect(actual).toBeGreaterThanOrEqual(expected - tolerance);
+      expect(actual).toBeLessThanOrEqual(expected + tolerance);
+    };
 
-  describe('Clock Settings', () => {
     const factory = (t: ZTimeZonePageComponentModel) => t.analog();
 
     it('should have time zone', () => shouldRenderTimeZone(userTimeZone(), factory));
     it('should render time', () => shouldRenderTheTime(2000, factory));
+  });
+
+  describe('Value', () => {
+    it('should format to the selected format', async () => {
+      // Arrange
+      const target = await createTestTarget();
+      const format = ZDateFormats.IsoDateOnly;
+      const expected = formatDateTime(new Date(), { format });
+      // Act.
+      const choice = await target.format();
+      await choice.select(format);
+      const actual = await target.value();
+      // Assert.
+      expect(actual).toEqual(expected);
+    });
+
+    it('should format to the selected culture', async () => {
+      // Arrange
+      const target = await createTestTarget();
+      const culture = 'en-GB';
+      const expected = formatDateTime(new Date(), { culture });
+      // Act.
+      const choice = await target.culture();
+      await choice.select(culture);
+      const actual = await target.value();
+      // Assert.
+      expect(actual).toEqual(expected);
+    });
+
+    it('should format to the selected timeZone', async () => {
+      // Arrange
+      const target = await createTestTarget();
+      const timeZone = userTimeZone();
+      const expected = formatDateTime(new Date(), { timeZone });
+      // Act.
+      const choice = await target.timeZone();
+      await choice.select(timeZone);
+      const actual = await target.value();
+      // Assert.
+      expect(actual).toEqual(expected);
+    });
   });
 });
